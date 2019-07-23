@@ -1,6 +1,9 @@
 topcoder-cli
 ===
 
+#### Build Status:
+[![CircleCI](https://circleci.com/gh/topcoder-platform/topcoder-cli/tree/master.svg?style=svg)](https://circleci.com/gh/topcoder-platform/topcoder-cli/tree/master) ![npm (tag)](https://img.shields.io/npm/v/@topcoder/topcoder-cli/latest.svg?style=plastic)
+
 # Dependencies
 - nodejs https://nodejs.org/en/ (v10)
 - npm https://www.npmjs.com/ (v6)
