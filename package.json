@@ -23,6 +23,10 @@
   "bin": {
     "tc": "bin/cli.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/topcoder-platform/topcoder-cli.git"
+  },
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
