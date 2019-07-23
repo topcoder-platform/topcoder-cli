@@ -27,6 +27,12 @@
     "type": "git",
     "url": "git+ssh://git@github.com/topcoder-platform/topcoder-cli.git"
   },
+  "author": "lazybaer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/topcoder-platform/topcoder-cli/issues"
+  },
+  "homepage": "https://topcoder-platform.github.io/topcoder-cli/",
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
