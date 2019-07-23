@@ -1,6 +1,6 @@
 {
   "name": "@topcoder/topcoder-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A CLI tool that will be used by Topcoder members to submit their solutions on challenges.",
   "main": "index.js",
   "scripts": {
