@@ -1,4 +1,4 @@
-tc-submission-cli
+topcoder-cli
 ===
 
 # Dependencies
