@@ -1,6 +1,6 @@
 {
   "name": "@topcoder/topcoder-cli",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A CLI tool that will be used by Topcoder members to submit their solutions on challenges.",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,12 @@
     "type": "git",
     "url": "git+ssh://git@github.com/topcoder-platform/topcoder-cli.git"
   },
+  "author": "lazybaer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/topcoder-platform/topcoder-cli/issues"
+  },
+  "homepage": "https://topcoder-platform.github.io/topcoder-cli/",
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
