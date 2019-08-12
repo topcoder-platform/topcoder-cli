@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.11",
+    "commander": "^3.0.0",
     "config": "^3.1.0",
     "fast-glob": "^2.2.6",
     "get-parameter-names": "^0.3.0",
@@ -21,7 +22,7 @@
     "winston": "^3.2.1"
   },
   "bin": {
-    "tc": "bin/cli.js"
+    "tc-submission-cli": "bin/tc-submission-cli.js"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
     "mocha": "^6.1.4",
     "mocha-prepare": "^0.1.0",
     "nock": "^10.0.6",
-    "nyc": "^14.1.1"
+    "nyc": "^14.1.1",
+    "standard": "^13.1.0"
   }
 }
