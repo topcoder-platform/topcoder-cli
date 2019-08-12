@@ -35,12 +35,12 @@ prepare(function (done) {
     .reply(200, testData.responses.submissionAPI.OK)
     .post('authV2', _.matches({ username: testData.sampleRCObject.username }))
     .reply(200, {
-      'id_token': testData.token.idToken
+      id_token: testData.token.idToken
     })
     .post('authV2')
     .reply(401, {
-      'error': 'invalid_user_password',
-      'error_description': 'Wrong email or password.'
+      error: 'invalid_user_password',
+      error_description: 'Wrong email or password.'
     })
     .post('authV3')
     .reply(200, {

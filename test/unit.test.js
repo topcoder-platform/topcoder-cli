@@ -37,7 +37,7 @@ describe('TC Submission CLI Test', async function () {
       testData.sampleZipFile,
       testData.token.admin,
       testData.userId.admin,
-      [ testData.challengeId.valid ]
+      [testData.challengeId.valid]
     )
   })
   it('topcoderrc - It should check if topcoder rc file exists', async function () {
