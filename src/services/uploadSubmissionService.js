@@ -11,31 +11,33 @@ const logger = require('../common/logger')
  * Under current working directory, it archives all files except rc file and
  * read rc configuration from the .topcoderrc file.
  *
- * @returns {undefined}
+ * @returns {Array} Uploaded submissions
  */
 async function smart (prefix) {
   const { username, password, challengeIds } = helper.readFromRCFile(path.join(prefix, constants.rc.name))
   const userId = await helper.getUserId(username)
   const submissionName = helper.submissionNameFromUserId(userId)
   const submissionData = helper.archiveCodebase(prefix)
-  const token = await helper.tokenFromCredentials(username, password)
-  await basic(submissionName, submissionData, token, userId, challengeIds)
+  return await basic(submissionName, submissionData, userId, username, password, challengeIds)
 }
 
 /**
  * Provide the basic functionality for upload a submission to multiple challenges.
- *
- * @param {String} submissionName the submission name
+ * @param {String} submissionName submission name
  * @param {String} submissionData the submission data; encoded string
- * @param {String} token a JWT token for authorization
- * @param {String} userId the user id
+ * @param {String} userId User ID
+ * @param {String} userName User name
+ * @param {String} password User password
  * @param {Array} challengeIds the array of challenge IDs
- * @returns {undefined}
+ * @returns {Array} uploaded submissions
  */
-async function basic (submissionName, submissionData, token, userId, challengeIds) {
+async function basic (submissionName, submissionData, userId, userName, password, challengeIds) {
+  const submissions = []
   for (const challengeId of challengeIds) {
-    await helper.createSubmission(submissionName, submissionData, token, userId, challengeId)
+    const submission = await helper.createSubmission(submissionName, submissionData, userId, userName, password, challengeId)
+    submissions.push(submission)
   }
+  return submissions
 }
 
 module.exports = {

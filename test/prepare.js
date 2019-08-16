@@ -8,7 +8,7 @@ const _ = require('lodash')
 const testData = require('./common/testData')
 const { URL } = require('url')
 
-const submissionAPIURL = new URL(config.SUBMISSION_API_URL)
+const submissionAPIURL = new URL(config.SUBMISSION_API_URL + '/submissions')
 const authnAPIURL = new URL(config.TC_AUTHN_URL)
 const authzAPIURL = new URL(config.TC_AUTHZ_URL)
 const membersAPIURL = new URL(config.TC_MEMBERS_API)
