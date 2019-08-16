@@ -33,7 +33,7 @@ module.exports = {
       }
     },
     membersAPI: {
-      id: "3aab742d:16c1acc1c39:-7d7b",
+      id: '3aab742d:16c1acc1c39:-7d7b',
       result: {
         success: true,
         status: 200,
@@ -41,8 +41,8 @@ module.exports = {
           userId: 8547899
         }
       },
-      version: "v3"
-    },
+      version: 'v3'
+    }
   },
   testCodebases: {
     withRCFile: './test/common/test_codebases/with_rc_file',
@@ -50,11 +50,11 @@ module.exports = {
     invalidRCFile: './test/common/test_codebases/rc_file_with_invalid_json_syntax'
   },
   sampleRCObject: {
-    'challengeIds': [
+    challengeIds: [
       '30095545'
     ],
-    'userId': '8547899',
-    'username': 'TonyJ',
-    'password': 'appirio123'
+    userId: '8547899',
+    username: 'TonyJ',
+    password: 'appirio123'
   }
 }
