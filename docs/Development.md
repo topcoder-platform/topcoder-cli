@@ -12,7 +12,7 @@ The following parameters can be set in config files or in env variables:
 | Property               | Environment varible     | Default value                              | Description                            |
 | ---                    | ---                     | ---                                        | ---                                    |
 | LOG_LEVEL              | LOG_LEVEL               | info                                       | control log level                      |
-| SUBMISSION_API_URL     | TEST_SUBMISSION_API_URL | https://api.topcoder.com/v5/submissions    | the TC submission API URL              |
+| SUBMISSION_API_URL     | TEST_SUBMISSION_API_URL | https://api.topcoder.com/v5    | the TC submission API URL              |
 | TC_AUTHN_URL           | TC_AUTHN_URL            | https://topcoder.auth0.com/oauth/ro        | API that is used to fetch JWT token v2 |
 | TC_AUTHZ_URL           | TC_AUTHZ_URL            | https://api.topcoder.com/v3/authorizations | API that is used to fetch JWT token v3 |
 | TC_CLIENT_ID           | TC_CLIENT_ID            | 6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P           | TC client ID                           |

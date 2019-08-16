@@ -6,9 +6,9 @@ const request = require('superagent')
 const AdmZip = require('adm-zip')
 const glob = require('fast-glob')
 const path = require('path')
-const ProgressBar = require('progress')
 const constants = require('../../constants')
 const logger = require('./logger')
+const submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper')
 
 const schemaForRC = Joi.object({
   challengeIds: Joi.array().min(1).required(),
@@ -81,98 +81,31 @@ function archiveCodebase (prefix) {
  *
  * @param {String} submissionName the submission name
  * @param {Buffer} submissionData the submission data
- * @param {String} token a JWT token for authorization
- * @param {String} userId the user id
+ * @param {String} userId User ID
+ * @param {String} userName User name
+ * @param {String} password User password
  * @param {String} challengeId the challenge id
  * @returns {Promise} the created submission
  */
-async function createSubmission (submissionName, submissionData, token, userId, challengeId) {
+async function createSubmission (submissionName, submissionData, userId, userName, password, challengeId) {
   logger.info(`Uploading submission on challenge ${challengeId}...`)
-  let bar
-  return request
-    .post(config.SUBMISSION_API_URL)
-    .set('Authorization', `Bearer ${token}`)
-    .field({
-      type: constants.submissionType.contestSubmission,
-      memberId: userId,
-      challengeId: challengeId
-    })
-    .attach('submission', submissionData, submissionName)
-    .on('progress', event => {
-      if (!bar) {
-        bar = new ProgressBar(`  uploading [:bar] :percent [Total: ${_humanFileSize(event.total)}]`, {
-          complete: '=',
-          incomplete: ' ',
-          width: 20,
-          total: event.total
-        })
-      }
-      bar.tick(event.loaded)
-      if (event.loaded === event.total) {
-        setInterval(() => {
-          process.stdout.write('.')
-        }, 1000)
-      }
-    })
-}
-
-/**
- * Convert byte to human-readable size.
- *
- * @param {Number} size the size in byte
- * @returns {String} the size human-readable
- */
-function _humanFileSize (size) {
-  const i = Math.floor(Math.log(size) / Math.log(1024))
-  return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
-}
-
-/**
- * Create token from credentials.
- *
- * @param {String} username the TC login username
- * @param {String} password the TC login password
- * @returns {String} JWT token that can be used in fetching TC resources.
- */
-async function tokenFromCredentials (username, password) {
-  logger.info('Fetching JWT token from TC Auth service...')
-  const v2Token = await request
-    .post(config.TC_AUTHN_URL)
-    .set('cache-control', constants.cacheControl.noCache)
-    .set('content-type', constants.contentType.json)
-    .send({
-      username: username,
-      password: password,
-      client_id: config.TC_CLIENT_ID,
-      sso: constants.sso,
-      scope: constants.scope,
-      response_type: constants.responseType,
-      connection: config.TC_CLIENT_V2CONNECTION,
-      grant_type: constants.grantType,
-      device: constants.device
-    })
-  const res = await _tokenV3FromV2(v2Token.body)
-  return _.get(res, 'body.result.content.token')
-}
-
-/**
- * Fetch v3 token.
- *
- * @param {Object} v2Token the v2 token
- * @returns {Object} response that contains v3 token
- */
-async function _tokenV3FromV2 (v2Token) {
-  return request
-    .post(config.TC_AUTHZ_URL)
-    .set('cache-control', constants.cacheControl.noCache)
-    .set('authorization', `Bearer ${v2Token['id_token']}`)
-    .set('content-type', constants.contentType.json)
-    .send({
-      param: {
-        externalToken: v2Token['id_token'],
-        refreshToken: _.get(v2Token, 'refresh_token', '')
-      }
-    })
+  const clientConfig = _.pick(config,
+    ['TC_AUTHN_URL', 'TC_AUTHZ_URL', 'TC_CLIENT_ID',
+     'TC_CLIENT_V2CONNECTION', 'SUBMISSION_API_URL'])
+  clientConfig['USERNAME'] = userName
+  clientConfig['PASSWORD'] = password
+  const submissionApiClient = submissionApi(clientConfig)
+  
+  const submission = {
+    memberId: userId,
+    challengeId: challengeId,
+    type: constants.submissionType.contestSubmission,
+    submission: {
+      name: submissionName,
+      data: submissionData
+    }
+  }
+  return await submissionApiClient.createSubmission(submission)
 }
 
 /**
@@ -204,7 +137,6 @@ module.exports = {
   validateRCObject,
   archiveCodebase,
   createSubmission,
-  tokenFromCredentials,
   submissionNameFromUserId,
   getUserId
 }

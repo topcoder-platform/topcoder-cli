@@ -10,6 +10,7 @@
     "test:cov": "nyc --reporter=html --reporter=text npm test"
   },
   "dependencies": {
+    "@topcoder-platform/topcoder-submission-api-wrapper": "^1.1.0",
     "adm-zip": "^0.4.11",
     "commander": "^3.0.0",
     "config": "^3.1.0",

@@ -14,14 +14,11 @@ describe('TC Submission CLI Test', async function () {
     await helper.createSubmission(
       testData.sampleZipFilename,
       testData.sampleZipFile,
-      testData.token.admin,
       testData.userId.admin,
+      'TonyJ',
+      'appirio123',
       testData.challengeId.valid
     )
-  })
-  it('helper.tokenFromCredentials() - It should obtain JWT token from TC login service by providing correct username and password', async function () {
-    const token = await helper.tokenFromCredentials(testData.sampleRCObject.username, testData.sampleRCObject.password)
-    chai.expect(token).to.eql(testData.token.admin)
   })
   it('helper.archiveCodebase() - It should ignore topcoder rc file', async function () {
     const zipArchive = helper.archiveCodebase(testData.testCodebases.withRCFile)
@@ -35,9 +32,10 @@ describe('TC Submission CLI Test', async function () {
     await uploadSubmissionService.basic(
       testData.sampleZipFilename,
       testData.sampleZipFile,
-      testData.token.admin,
       testData.userId.admin,
-      [testData.challengeId.valid]
+      'TonyJ',
+      'appirio123',
+      [ testData.challengeId.valid ]
     )
   })
   it('topcoderrc - It should check if topcoder rc file exists', async function () {
