@@ -7,6 +7,11 @@ const logger = require('../src/common/logger')
 const _ = require('lodash')
 const fs = require('fs')
 
+program
+  .option('-u, --username <uname>', 'Topcoder username')
+  .option('-p, --password <password>', 'Topcoder password')
+  .option('-c, --challengeIds <ids>', 'Comma separated challenge IDs to which submission need to be done')
+
 program.on('--help', () => {
   console.log(`\nTopcoder CLI to create a new submission in the challenge 
   with contents from current directory\n`)
@@ -24,7 +29,7 @@ program.on('--help', () => {
 
 program.parse(process.argv)
 
-uploadSubmissionService.smart(process.cwd())
+uploadSubmissionService.smart(process.cwd(), program)
   .then(async (responses) => {
     const log = {}
     _.each(responses, response => {
