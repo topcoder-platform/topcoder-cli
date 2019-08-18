@@ -26,7 +26,9 @@ const schemaForRC = Joi.object({
 function readFromRCFile (filename, cliParams) {
   logger.info('Reading from topcoder rc file...')
   const rcObject = JSON.parse(fs.readFileSync(filename).toString())
-  cliParams.challengeIds = cliParams.challengeIds.split(',')
+  if (cliParams.challengeIds) {
+    cliParams.challengeIds = cliParams.challengeIds.split(',')
+  }
   // Override values from RC file with CLI params
   return validateRCObject(_.merge(rcObject, _.pick(cliParams, ['username', 'password', 'challengeIds'])))
 }

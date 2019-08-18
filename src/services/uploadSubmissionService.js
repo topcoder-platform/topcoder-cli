@@ -16,9 +16,6 @@ const logger = require('../common/logger')
  */
 async function smart (currDir, cliParams) {
   const { username, password, challengeIds } = helper.readFromRCFile(path.join(currDir, constants.rc.name), cliParams)
-  console.log(username)
-  console.log(password)
-  console.log(challengeIds)
   const userId = await helper.getUserId(username)
   const submissionName = helper.submissionNameFromUserId(userId)
   const submissionData = helper.archiveCodebase(currDir)
