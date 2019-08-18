@@ -20,12 +20,17 @@ const schemaForRC = Joi.object({
  * Read configuration from given topcoder rc file.
  *
  * @param {String} filename the name of the rc file
+ * @param {Object} cliParams CLI params passed to the program
  * @returns {Object} the rc object
  */
-function readFromRCFile (filename) {
+function readFromRCFile (filename, cliParams) {
   logger.info('Reading from topcoder rc file...')
   const rcObject = JSON.parse(fs.readFileSync(filename).toString())
-  return validateRCObject(rcObject)
+  if (cliParams.challengeIds) {
+    cliParams.challengeIds = cliParams.challengeIds.split(',')
+  }
+  // Override values from RC file with CLI params
+  return validateRCObject(_.merge(rcObject, _.pick(cliParams, ['username', 'password', 'challengeIds'])))
 }
 
 /**
@@ -91,11 +96,11 @@ async function createSubmission (submissionName, submissionData, userId, userNam
   logger.info(`Uploading submission on challenge ${challengeId}...`)
   const clientConfig = _.pick(config,
     ['TC_AUTHN_URL', 'TC_AUTHZ_URL', 'TC_CLIENT_ID',
-     'TC_CLIENT_V2CONNECTION', 'SUBMISSION_API_URL'])
+      'TC_CLIENT_V2CONNECTION', 'SUBMISSION_API_URL'])
   clientConfig['USERNAME'] = userName
   clientConfig['PASSWORD'] = password
   const submissionApiClient = submissionApi(clientConfig)
-  
+
   const submission = {
     memberId: userId,
     challengeId: challengeId,
@@ -105,7 +110,7 @@ async function createSubmission (submissionName, submissionData, userId, userNam
       data: submissionData
     }
   }
-  return await submissionApiClient.createSubmission(submission)
+  return submissionApiClient.createSubmission(submission)
 }
 
 /**
