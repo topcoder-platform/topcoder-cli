@@ -12,6 +12,7 @@ const submissionAPIURL = new URL(config.SUBMISSION_API_URL + '/submissions')
 const authnAPIURL = new URL(config.TC_AUTHN_URL)
 const authzAPIURL = new URL(config.TC_AUTHZ_URL)
 const membersAPIURL = new URL(config.TC_MEMBERS_API)
+const m2mURL = new URL(config.AUTH0_URL)
 
 prepare(function (done) {
   nock(/.com/)
@@ -28,6 +29,9 @@ prepare(function (done) {
       }
       if (_.includes(path, membersAPIURL.pathname)) {
         return 'members'
+      }
+      if (_.includes(path, m2mURL.pathname)) {
+        return 'm2mAuth'
       }
       return path
     })
@@ -52,6 +56,11 @@ prepare(function (done) {
     })
     .get('members')
     .reply(200, testData.responses.membersAPI)
+    .post('m2mAuth')
+    .reply(200, {
+      access_token: 'smellycat',
+      expiry: 8400
+    })
   done()
 }, function (done) {
   done()

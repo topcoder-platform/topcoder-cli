@@ -8,12 +8,17 @@ const glob = require('fast-glob')
 const path = require('path')
 const constants = require('../../constants')
 const logger = require('./logger')
+const errors = require('./errors')
 const submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper')
 
 const schemaForRC = Joi.object({
   challengeIds: Joi.array().min(1).required(),
   username: Joi.string().required(),
-  password: Joi.string().required()
+  password: Joi.string().required(),
+  m2m: Joi.object({
+    client_id: Joi.string().required(),
+    client_secret: Joi.string().required()
+  })
 })
 
 /**
@@ -43,8 +48,7 @@ function validateRCObject (rcObject) {
   try {
     Joi.attempt(rcObject, schemaForRC)
   } catch (err) {
-    logger.error(err)
-    throw Error(`RC validation failed: ${err.message}`)
+    throw errors.RCValidationError(err)
   }
   return rcObject
 }

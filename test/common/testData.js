@@ -56,5 +56,11 @@ module.exports = {
     userId: '8547899',
     username: 'TonyJ',
     password: 'appirio123'
+  },
+  sampleIniObject: {
+    m2m: {
+      client_id: 'ajksbsnsj',
+      client_secret: 'vvdhdbhbdhbdn_djdj'
+    }
   }
 }

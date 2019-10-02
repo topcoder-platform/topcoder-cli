@@ -2,6 +2,7 @@
  * Upload user submission.
  */
 const helper = require('../common/helper')
+const errors = require('../common/errors')
 const constants = require('../../constants')
 const path = require('path')
 const logger = require('../common/logger')
@@ -35,8 +36,21 @@ async function smart (currDir, cliParams) {
 async function basic (submissionName, submissionData, userId, userName, password, challengeIds) {
   const submissions = []
   for (const challengeId of challengeIds) {
-    const submission = await helper.createSubmission(submissionName, submissionData, userId, userName, password, challengeId)
-    submissions.push(submission)
+    try {
+      const submission = await helper.createSubmission(submissionName, submissionData, userId, userName, password, challengeId)
+      submissions.push(submission)
+    } catch (err) {
+      /* different errors will have different statuses. We can use different
+      status to show meaningful output here */
+      switch (err.status) {
+        case 402:
+          logger.error(errors.invalidAuthCredentialsErrorMsg)
+          break
+        default:
+          logger.error(`${err.message} Error while uploading submission to challenge ID ${challengeId}.`)
+          break
+      }
+    }
   }
   return submissions
 }

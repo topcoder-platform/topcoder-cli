@@ -2,10 +2,10 @@
 process.env.NODE_CONFIG_DIR = `${__dirname}/../config/`
 
 const program = require('commander')
-const uploadSubmissionService = require('../src/services/uploadSubmissionService')
+const submit = require('../src/commands/submit')
+const pay = require('../src/commands/pay')
+const config = require('../src/commands/config')
 const logger = require('../src/common/logger')
-const _ = require('lodash')
-const fs = require('fs')
 
 program
   .option('-u, --username <uname>', 'Topcoder username')
@@ -27,32 +27,36 @@ program.on('--help', () => {
   }`)
 })
 
-program.parse(process.argv)
+program
+  .command('submit')
+  .description('Create a challenge submission')
+  .action(() => {
+    try {
+      submit(program)
+    } catch (error) {
+      logger.error(error.message)
+    }
+  })
 
-uploadSubmissionService.smart(process.cwd(), program)
-  .then(async (responses) => {
-    const log = {}
-    _.each(responses, response => {
-      const resp = JSON.parse(response.text)
-      const submissionId = _.get(resp, 'id', undefined)
-      const challengeId = _.get(resp, 'challengeId', undefined)
-      if (submissionId && challengeId) {
-        if (log[challengeId]) {
-          log[challengeId].push(submissionId)
-        } else {
-          log[challengeId] = [submissionId]
-        }
-      }
-    })
-    const logTxt = _.join(_.map(_.keys(log), key => `challenge_${key}:\t${log[key]}`), '\n')
-    logger.info(`Uploaded submissions:\n${logTxt}`)
-    await fs.writeFileSync('topcoder-cli.log',
-      `${Date.now()}:\n${logTxt}\n\n`,
-      { flag: 'a' })
-    logger.info('Completed!')
-    process.exit()
+program
+  .command('config')
+  .description('Set up/change globally configured config')
+  .option('-l --list', 'Print out the config of the config file.')
+  .option('-a --add <key> <value>', 'Adds a config to the config file.')
+  .action((...args) => {
+    try {
+      config.handleSubCommand(args)
+    } catch (error) {
+      logger.error(error.message)
+    }
   })
-  .catch(err => {
-    logger.error(err.message)
-    process.exit(1)
+
+program
+  .command('pay')
+  .description('Let copilot/managers process private task payments')
+  .option('-o --copilot <payment>', 'copilot payment.')
+  .action((...args) => {
+    pay.handleCommand(args)
   })
+
+program.parse(process.argv)

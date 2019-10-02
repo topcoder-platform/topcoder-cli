@@ -5,6 +5,9 @@ module.exports = {
   rc: {
     name: '.topcoderrc'
   },
+  config: {
+    name: '.tcconfig'
+  },
   submissionType: {
     contestSubmission: 'Contest Submission'
   },
