@@ -1,18 +1,14 @@
-const homedir = require('os').homedir()
-const path = require('path')
-const constants = require('../../constants')
 const configService = require('../services/configService')
 const errors = require('../common/errors')
-
-const configPath = path.join(homedir, constants.config.name)
+const constants = require('../../constants')
 
 function handleSubCommand (args) {
   const options = args[args.length - 1].opts()
   // Count the number of options which are enabled.
   const numOptions = Object.values(options).reduce((t, obj) => obj !== undefined ? t + 1 : t, 0)
 
-  if (numOptions > 1) {
-    throw errors.invalidNoOfOptionsUsedError()
+  if (numOptions > 1 || numOptions === 0) {
+    throw errors.customError(constants.errorMessages.invalidOptions)
   }
 
   const allOptions = Object.keys(options)
@@ -28,34 +24,23 @@ function handleSubCommand (args) {
 
   switch (selectedOption) {
     case 'list':
-      showConfigFile()
+      console.log(configService.showConfigFileService())
       break
     case 'add':
       // key is set to the value of option `add`
       // args[0] should contain the value we want to add
       // console.log(options.add, args[0])
       if (args.length > 2) {
-        throw errors.invalidNoOfArgsPassedError()
+        throw errors.customError(constants.errorMessages.invalidArgs)
       }
-      addToConfigFile(options.add, args[0])
-      break
+      return configService.addToConfigFileService(options.add, args[0])
+    case 'unset':
+      return configService.deleteFromConfigFileService(options.unset)
     default :
-
       break
   }
 }
 
-function showConfigFile () {
-  console.log(configService.showConfigFileService(configPath))
-}
-
-function addToConfigFile (key, value) {
-  return configService.addToConfigFileService(key, value, configPath)
-}
-
 module.exports = {
-  handleSubCommand,
-  showConfigFile,
-  addToConfigFile,
-  configPath
+  handleSubCommand
 }

@@ -1,7 +1,6 @@
 const _ = require('lodash')
 const Joi = require('joi')
 const fs = require('fs')
-const config = require('config')
 const request = require('superagent')
 const AdmZip = require('adm-zip')
 const glob = require('fast-glob')
@@ -9,17 +8,23 @@ const path = require('path')
 const constants = require('../../constants')
 const logger = require('./logger')
 const errors = require('./errors')
+const configService = require('../services/configService')
 const submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper')
 
 const schemaForRC = Joi.object({
   challengeIds: Joi.array().min(1).required(),
-  username: Joi.string().required(),
-  password: Joi.string().required(),
+  username: Joi.string(),
+  password: Joi.string(),
+  memberId: Joi.number().integer().min(1),
   m2m: Joi.object({
     client_id: Joi.string().required(),
     client_secret: Joi.string().required()
   })
-})
+}).or('username', 'm2m')
+  .xor('username', 'm2m')
+  .with('username', 'password')
+  .with('password', 'username')
+  .with('m2m', 'memberId')
 
 /**
  * Read configuration from given topcoder rc file.
@@ -29,13 +34,30 @@ const schemaForRC = Joi.object({
  * @returns {Object} the rc object
  */
 function readFromRCFile (filename, cliParams) {
-  logger.info('Reading from topcoder rc file...')
-  const rcObject = JSON.parse(fs.readFileSync(filename).toString())
+  let rcObject = {}
+  // Read if Topcoder RC file exists
+  if (fs.existsSync(filename)) {
+    logger.info('Reading from topcoder rc file...')
+    rcObject = JSON.parse(fs.readFileSync(filename).toString())
+  }
+
   if (!_.isEmpty(_.get(cliParams, 'challengeIds'))) {
     cliParams.challengeIds = cliParams.challengeIds.split(',')
   }
+
   // Override values from RC file with CLI params
-  return validateRCObject(_.merge(rcObject, _.pick(cliParams, ['username', 'password', 'challengeIds'])))
+  let mergedCred = _.merge(rcObject, _.pick(cliParams, ['username', 'password', 'challengeIds', 'memberId']))
+
+  // Read from Global config only if there are no overrides from RC file or CLI
+  if (!(Object.keys(mergedCred).includes('username') || Object.keys(mergedCred).includes('m2m.client_id'))) {
+    const globalConfig = configService.readFromConfigFileService()
+    if ('username' in globalConfig) {
+      mergedCred = _.merge(mergedCred, _.pick(globalConfig, ['username', 'password']))
+    } else if ('m2m' in globalConfig) {
+      mergedCred = _.merge(mergedCred, _.pick(globalConfig, ['m2m']))
+    }
+  }
+  return validateRCObject(mergedCred)
 }
 
 /**
@@ -48,7 +70,7 @@ function validateRCObject (rcObject) {
   try {
     Joi.attempt(rcObject, schemaForRC)
   } catch (err) {
-    throw errors.RCValidationError(err)
+    throw errors.customError(`RC validation failed: ${err.message}`)
   }
   return rcObject
 }
@@ -97,7 +119,9 @@ function archiveCodebase (prefix) {
  * @returns {Promise} the created submission
  */
 async function createSubmission (submissionName, submissionData, userId, userName, password, challengeId) {
+  const config = require('../config')()
   logger.info(`Uploading submission on challenge ${challengeId}...`)
+
   const clientConfig = _.pick(config,
     ['TC_AUTHN_URL', 'TC_AUTHZ_URL', 'TC_CLIENT_ID',
       'TC_CLIENT_V2CONNECTION', 'SUBMISSION_API_URL'])
@@ -124,6 +148,7 @@ async function createSubmission (submissionName, submissionData, userId, userNam
  * @returns {String} the user's ID
  */
 async function getUserId (username) {
+  const config = require('../config')()
   const res = await request
     .get(`${config.TC_MEMBERS_API}/${username}`)
     .set('cache-control', constants.cacheControl.noCache)

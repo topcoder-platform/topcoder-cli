@@ -30,12 +30,20 @@ The following parameters can be set in config files or in env variables:
   After that, run `npm publish` again to republish the package.
 - If you want to remove the package from npm registry anyway, run `npm unpublish --force` under the root directory of the project.
 
-# test
+## Installing globally
 
-## Prepare
-- Install dependencies `npm install`
+To install the tool globally so that you can test it's working, run the below command from project root directory.
+
+```
+npm install -g .
+```
+
+Later on you will be able to run `topcoder` command from any directory
 
 ## Unit test
+
+- Install dependencies `npm install`
+
 To run unit tests alone
 
 ```bash

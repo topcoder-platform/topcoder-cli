@@ -2,7 +2,6 @@
  * Upload user submission.
  */
 const helper = require('../common/helper')
-const errors = require('../common/errors')
 const constants = require('../../constants')
 const path = require('path')
 const logger = require('../common/logger')
@@ -16,10 +15,18 @@ const logger = require('../common/logger')
  * @returns {Array} Uploaded submissions
  */
 async function smart (currDir, cliParams) {
-  const { username, password, challengeIds } = helper.readFromRCFile(path.join(currDir, constants.rc.name), cliParams)
-  const userId = await helper.getUserId(username)
+  const { username, password, challengeIds, memberId } = helper.readFromRCFile(path.join(currDir, constants.rc.name), cliParams)
+  let userId
+
+  if (memberId) {
+    userId = memberId
+  } else {
+    userId = await helper.getUserId(username)
+  }
+
   const submissionName = helper.submissionNameFromUserId(userId)
   const submissionData = helper.archiveCodebase(currDir)
+
   return basic(submissionName, submissionData, userId, username, password, challengeIds)
 }
 
@@ -40,16 +47,7 @@ async function basic (submissionName, submissionData, userId, userName, password
       const submission = await helper.createSubmission(submissionName, submissionData, userId, userName, password, challengeId)
       submissions.push(submission)
     } catch (err) {
-      /* different errors will have different statuses. We can use different
-      status to show meaningful output here */
-      switch (err.status) {
-        case 402:
-          logger.error(errors.invalidAuthCredentialsErrorMsg)
-          break
-        default:
-          logger.error(`${err.message} Error while uploading submission to challenge ID ${challengeId}.`)
-          break
-      }
+      logger.error(`Error while uploading submission to challenge ID ${challengeId}. Detail - ${err.message}`)
     }
   }
   return submissions

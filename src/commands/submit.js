@@ -1,5 +1,5 @@
 const uploadSubmissionService = require('../services/uploadSubmissionService')
-const errors = require('../common/errors')
+const constants = require('../../constants')
 const logger = require('../common/logger')
 const _ = require('lodash')
 const fs = require('fs')
@@ -35,7 +35,7 @@ const submit = (params) => {
     .catch(err => {
       switch (err.code) {
         case 'ENOTFOUND':
-          logger.error(errors.connectionErrorMsg)
+          logger.error(constants.errorMessages.connectionError)
           break
         default:
           logger.error(err.message)

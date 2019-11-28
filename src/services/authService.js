@@ -1,6 +1,5 @@
 const _ = require('lodash')
 
-const config = require('config')
 const path = require('path')
 const constants = require('../../constants')
 const helper = require('../common/helper')
@@ -10,6 +9,7 @@ const configService = require('./configService')
 const tcCoreAPi = require('tc-core-library-js')
 
 async function m2mAuth (cliParams) {
+  const config = require('../config')()
   const cwd = process.cwd()
   const rcObj = helper.readFromRCFile(path.join(cwd, constants.rc.name), cliParams)
   const configObj = configService.readFromConfigFileService(configCommand.configPath)

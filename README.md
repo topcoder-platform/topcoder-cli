@@ -6,7 +6,7 @@ topcoder-cli
 
 # Installation
 
-- Install the package via npm-cli:
+- Install the package via npm cli
 
 ``` node
 npm i -g @topcoder/topcoder-cli
@@ -14,17 +14,6 @@ npm i -g @topcoder/topcoder-cli
 
 # Usage
 
-First, install the package, and then run `tc-submission-cli` command on the root directory of your project with `.topcoderrc` file.
-It'll then automatically zip all files under the root directory recursively(except the .topcoderrc file itself) and finally upload the zip file to the TC challenge as a submission.
+* To understand the commands supported by Topcoder CLI, after installing the package run `topcoder --help` which would list out all supported commands. 
 
-An example `.topcoderrc` file should conform to at least the following structure.
-
-``` jsonr
-{
-  "challengeIds": [
-    "30095545" // at least one item here
-  ],
-  "username": "TonyJ",
-  "password": "******"
-}
-```
+* If you need to understand the options available with each command, run `topcoder [ command ] --help`. E.g. Executing the command `topcoder submit --help` will display the help content related to making topcoder submission using CLI

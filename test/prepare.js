@@ -1,5 +1,5 @@
 /*
- * Setup nock to mock API.
+ * Setup nock to mock API calls.
  */
 const prepare = require('mocha-prepare')
 const nock = require('nock')

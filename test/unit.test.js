@@ -24,14 +24,17 @@ describe('TC Submission CLI Test', async function () {
       testData.challengeId.valid
     )
   })
+
   it('helper.archiveCodebase() - It should ignore topcoder rc file', async function () {
     const zipArchive = helper.archiveCodebase(testData.testCodebases.withRCFile)
     const entries = testHelper.listZipEntries(zipArchive)
     chai.expect(entries.length).to.equal(2) // there should be three files under the directory if .topcoderrc is included
   })
+
   it('uploadSubmissionService.smart() - It should create submission from a codebase with valid RC file', async function () {
     await uploadSubmissionService.smart(testData.testCodebases.withRCFile)
   })
+
   it('uploadSubmissionService.basic() - It should create submission with valid RC configs', async function () {
     await uploadSubmissionService.basic(
       testData.sampleZipFilename,
@@ -42,6 +45,7 @@ describe('TC Submission CLI Test', async function () {
       [testData.challengeId.valid]
     )
   })
+
   it('topcoderrc - It should check if topcoder rc file exists', async function () {
     try {
       await uploadSubmissionService.smart(testData.testCodebases.withoutRCFile)
@@ -50,6 +54,7 @@ describe('TC Submission CLI Test', async function () {
       chai.expect(err.message).to.include('no such file')
     }
   })
+
   it('topcoderrc - It should check if topcoder rc file has valid json syntax', async function () {
     try {
       await uploadSubmissionService.smart(testData.testCodebases.invalidRCFile)
@@ -58,6 +63,7 @@ describe('TC Submission CLI Test', async function () {
       chai.expect(err.message).to.include('Unexpected token')
     }
   })
+
   it('topcoderrc - It should check if field challengeIds is empty', async function () {
     try {
       helper.validateRCObject({
@@ -69,6 +75,7 @@ describe('TC Submission CLI Test', async function () {
       chai.expect(err.message).to.include('must contain at least 1 items')
     }
   })
+
   for (const field of ['challengeIds', 'username', 'password']) {
     it(`topcoderrc - It should check if field ${field} exists in topcoder rc file`, async function () {
       try {
@@ -172,15 +179,19 @@ describe('TC Submission CLI Test', async function () {
     it('should return RC validation failed Error when called', async function () {
       chai.expect(errors.RCValidationError(new Error()).message).to.contain('RC validation failed')
     })
+
     it('should return No Global Config Found Error when called', async function () {
       chai.expect(errors.noGlobalConfigFileFoundError().message).to.contain('no global config file found')
     })
+
     it('should return Invalid No of options used Error when called', async function () {
       chai.expect(errors.invalidNoOfOptionsUsedError().message).to.contain('Invalid group of options')
     })
+
     it('should return Invalid no of values passed Error when called', async function () {
       chai.expect(errors.invalidNoOfArgsPassedError().message).to.contain('Invalid number of values passed')
     })
+
     it('should return invalide key for config file Error when called', async function () {
       chai.expect(errors.invalidKeyForConfigFileError([]).message).to.contain('Invalid key value')
     })

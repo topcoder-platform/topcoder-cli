@@ -1,7 +1,7 @@
 {
   "name": "@topcoder/topcoder-cli",
   "version": "1.0.3",
-  "description": "A CLI tool that will be used by Topcoder members to submit their solutions on challenges.",
+  "description": "A CLI tool to interact with Topcoder systems.",
   "main": "index.js",
   "scripts": {
     "lint": "standard",
@@ -13,7 +13,6 @@
     "@topcoder-platform/topcoder-submission-api-wrapper": "^1.1.0",
     "adm-zip": "^0.4.11",
     "commander": "^3.0.0",
-    "config": "^3.1.0",
     "fast-glob": "^2.2.6",
     "get-parameter-names": "^0.3.0",
     "ini": "^1.3.5",
@@ -26,13 +25,13 @@
     "winston": "^3.2.1"
   },
   "bin": {
-    "tc-submission-cli": "bin/tc-submission-cli.js"
+    "topcoder": "bin/topcoder-cli.js"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/topcoder-platform/topcoder-cli.git"
   },
-  "author": "lazybaer",
+  "author": "Topcoder",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/topcoder-platform/topcoder-cli/issues"
