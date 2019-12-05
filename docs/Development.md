@@ -17,6 +17,7 @@ The following parameters can be set in config files or in env variables:
 | TC_AUTHZ_URL           | TC_AUTHZ_URL            | https://api.topcoder.com/v3/authorizations | API that is used to fetch JWT token v3 |
 | TC_CLIENT_ID           | TC_CLIENT_ID            | 6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P           | TC client ID                           |
 | TC_CLIENT_V2CONNECTION | CLIENT_V2CONNECTION     | TC-User-Database                           | TC client connection protocol          |
+| AUTH0_AUDIENCE         | AUTH0_AUDIENCE          | https://m2m.topcoder.com/                  | AUTH0 Audience (For M2M)               |
 
 # Publish the package to npm
 - Create a npm account on https://www.npmjs.com/signup if you don't have one.

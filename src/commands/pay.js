@@ -1,5 +1,9 @@
 const prompts = require('prompts')
 
+/**
+ * Handles the "pay" command
+ * @param {Array} args Arguments
+ */
 function handleCommand (args) {
   const options = args[args.length - 1].opts()
   const challengeDetails = [

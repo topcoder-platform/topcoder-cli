@@ -6,18 +6,22 @@
   "scripts": {
     "lint": "standard",
     "lint:fix": "standard --fix",
+    "format": "prettier-standard \"src/**/*.js\" \"bin/**/*.js\" \"test/**/*.js\" \"config/**/*.js\"",
     "test": "mocha --require test/prepare.js -t 20000 test/unit.test.js --exit",
     "test:cov": "nyc --reporter=html --reporter=text npm test"
   },
   "dependencies": {
+    "@hapi/joi": "^16.1.8",
     "@topcoder-platform/topcoder-submission-api-wrapper": "^1.1.0",
     "adm-zip": "^0.4.11",
     "commander": "^3.0.0",
+    "content-disposition": "^0.5.3",
     "fast-glob": "^2.2.6",
+    "fs-extra": "^8.1.0",
     "get-parameter-names": "^0.3.0",
     "ini": "^1.3.5",
-    "joi": "^14.0.0",
     "lodash": "^4.17.15",
+    "moment": "^2.24.0",
     "progress": "^2.0.3",
     "prompts": "^2.2.1",
     "superagent": "^5.0.5",
@@ -43,7 +47,13 @@
     "mocha-prepare": "^0.1.0",
     "nock": "^10.0.6",
     "nyc": "^14.1.1",
+    "prettier-standard": "^16.0.0",
     "sinon": "^7.5.0",
     "standard": "^13.1.0"
+  },
+  "standard": {
+    "env": {
+      "mocha": true
+    }
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Application constants will be stored here
+ * Application constants
  */
 
 module.exports = {

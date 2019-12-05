@@ -3,7 +3,7 @@
  */
 
 const _ = require('lodash')
-const Joi = require('joi')
+const Joi = require('@hapi/joi')
 const util = require('util')
 const config = require('../config')()
 const getParams = require('get-parameter-names')
@@ -13,10 +13,10 @@ const logger = createLogger({
   level: config.LOG_LEVEL,
   transports: [
     new transports.Console({
-      format: format.combine(
-        format.colorize(),
-        format.simple()
-      )
+      format: format.combine(format.colorize(), format.simple())
+    }),
+    new transports.File({
+      filename: 'topcoder-cli.log'
     })
   ]
 })
@@ -46,14 +46,16 @@ logger.logFullError = (err, signature) => {
  * @returns {Object} the new object with removed properties
  * @private
  */
-const _sanitizeObject = (obj) => {
+const _sanitizeObject = obj => {
   try {
-    return JSON.parse(JSON.stringify(obj, (name, value) => {
-      if (_.isArray(value) && value.length > 30) {
-        return `Array(${value.length})`
-      }
-      return value
-    }))
+    return JSON.parse(
+      JSON.stringify(obj, (name, value) => {
+        if (_.isArray(value) && value.length > 30) {
+          return `Array(${value.length})`
+        }
+        return value
+      })
+    )
   } catch (e) {
     return obj
   }
@@ -77,7 +79,7 @@ const _combineObject = (params, arr) => {
  * Decorate all functions of a service and log debug information if DEBUG is enabled
  * @param {Object} service the service
  */
-logger.decorateWithLogging = (service) => {
+logger.decorateWithLogging = service => {
   if (config.LOG_LEVEL !== 'debug') {
     return
   }
@@ -125,7 +127,7 @@ logger.decorateWithValidators = function (service) {
       // Joi will normalize values
       // for example string number '1' to 1
       // if schema type is number
-      _.each(params, (param) => {
+      _.each(params, param => {
         newArgs.push(normalized[param])
       })
       return method.apply(this, newArgs)
@@ -138,7 +140,7 @@ logger.decorateWithValidators = function (service) {
  * Apply logger and validation decorators
  * @param {Object} service the service to wrap
  */
-logger.buildService = (service) => {
+logger.buildService = service => {
   logger.decorateWithValidators(service)
   logger.decorateWithLogging(service)
 }
