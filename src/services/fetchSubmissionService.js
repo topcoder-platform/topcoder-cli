@@ -14,17 +14,17 @@ let submissionApiClient
 const schemaForRC = helper.defaultAuthSchema
   .keys({
     challengeId: Joi.string().required(),
-    userId: Joi.number().integer(),
+    memberId: Joi.number().integer(),
     submissionId: Joi.string(),
     latest: Joi.boolean()
   })
-  .without('submissionId', ['userId', 'latest'])
-  .without('userId', 'submissionId')
+  .without('submissionId', ['memberId', 'latest'])
+  .without('memberId', 'submissionId')
   .without('latest', 'submissionId')
   .unknown()
 
 // Acceptable CLI params
-const validCLIParams = ['challengeId', 'userId', 'submissionId', 'latest']
+const validCLIParams = ['challengeId', 'memberId', 'submissionId', 'latest']
 
 /**
  * Download the submissions to the savePath directory sequentially.s
@@ -92,7 +92,7 @@ async function fetchSubmissions (currDir, cliParams) {
     password,
     m2m,
     challengeId,
-    userId,
+    memberId,
     submissionId,
     latest
   } = await helper.readFromRCFile(rcPath, params, schemaForRC, validCLIParams)
@@ -129,9 +129,9 @@ async function fetchSubmissions (currDir, cliParams) {
       perPage: 100,
       page
     }
-    // If there's a userId specified, filter by userId.
-    if (userId) {
-      query.memberId = userId
+    // If there's a memberId specified, filter by memberId.
+    if (memberId) {
+      query.memberId = memberId
     }
     // Get a list of submissions
     const nextSubmissions = await submissionApiClient.searchSubmissions(query)
