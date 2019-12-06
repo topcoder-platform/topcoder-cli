@@ -38,17 +38,32 @@ async function downloadArtifacts (submissionId, artifacts, savePath) {
     )
     try {
       // Download the artifact
-      const req = await submissionApiClient.downloadArtifact(
+      let req = await submissionApiClient.downloadArtifact(
         submissionId,
-        artifactId
+        artifactId,
+        null,
+        true
       )
+      // Get the temporary path
+      const temporaryFilePath = path.join(savePath, `artifact-${artifactId}.tcdownload`)
+      // Save the file
+      const fStream = fs.createWriteStream(temporaryFilePath)
+      const writeStream = req.pipe(fStream)
+      // Wait for write to complete
+      await new Promise((resolve, reject) => {
+        req.on('response', (_req) => {
+          req = _req
+        })
+        writeStream.on('finish', resolve)
+        writeStream.on('error', reject)
+      })
       // Get file name from headers
       const disposition = _.get(req, 'headers.content-disposition')
       const fileName = contentDisposition.parse(disposition).parameters.filename
-      // Get file path
-      const filePath = path.join(savePath, `${fileName}`)
+      // Get the final file path
+      const filePath = path.join(savePath, fileName)
       // Save the file
-      await fs.writeFile(filePath, req.body)
+      await fs.move(temporaryFilePath, filePath)
       // Log the result
       logger.info(
         `[${idx + 1}/${artifacts.length}] ` +
