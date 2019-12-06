@@ -41,8 +41,8 @@ program
         `  "username": "<Topcoder username>",\n` +
         `  "password": "<Topcoder password>",\n` +
         `  "m2m": {\n` +
-        `    client_id: "<Client ID for M2M authentication>",\n` +
-        `    client_secret: "<Client Secret for M2M authentication>"\n` +
+        `    "client_id": "<Client ID for M2M authentication>",\n` +
+        `    "client_secret": "<Client Secret for M2M authentication>"\n` +
         `  }\n` +
         `}\n` +
         `and execute command \`topcoder submit\` to submit the contents of ` +
@@ -72,8 +72,8 @@ program
     'Challenge ID for submissions to be fetched'
   )
   .option(
-    '-u, --userId <id>',
-    'Fetch only the submission of for a particular user id'
+    '-m, --memberId <id>',
+    'Fetch only the submission of for a particular member id'
   )
   .option(
     '-s, --submissionId <id>',
@@ -83,17 +83,17 @@ program
   .option('--dev', 'Points to Topcoder development environment')
   .on('--help', () => {
     console.log(
-      `\nUse CLI parameters or create a file .topcoderrc in JSON format with below details` +
+      `\nUse CLI parameters or create a file .topcoderrc in JSON format with below details\n` +
         `{\n` +
-        `  "userId": "<Topcoder memberId",\n` +
+        `  "memberId": "<Topcoder memberId",\n` +
         `  "challengeId": "<Topcoder challengeId",\n` +
         `  "submissionId": "<Topcoder submissionId",\n` +
         `  "latest": true,\n` +
         `  "username": "<Topcoder username>",\n` +
         `  "password": "<Topcoder password>",\n` +
         `  "m2m": {\n` +
-        `    client_id: "<Client ID for M2M authentication>",\n` +
-        `    client_secret: "<Client Secret for M2M authentication>"\n` +
+        `    "client_id": "<Client ID for M2M authentication>",\n` +
+        `    "client_secret": "<Client Secret for M2M authentication>"\n` +
         `  }\n` +
         `}\n` +
         `and execute command \`topcoder fetch-submissions\` to fetch submissions ` +
@@ -101,7 +101,7 @@ program
         `You may specify the m2m config or the username and password config, ` +
         `but not both.\n` +
         `If the submissionId parameter is provided, you must not provide the ` +
-        `userId or the latest parameters.\n` +
+        `memberId or the latest parameters.\n` +
         `The challengeId parameter is always required.`
     )
   })
@@ -140,8 +140,8 @@ program
         `  "username": "<Topcoder username>",\n` +
         `  "password": "<Topcoder password>",\n` +
         `  "m2m": {\n` +
-        `    client_id: "<Client ID for M2M authentication>",\n` +
-        `    client_secret: "<Client Secret for M2M authentication>"\n` +
+        `    "client_id": "<Client ID for M2M authentication>",\n` +
+        `    "client_secret": "<Client Secret for M2M authentication>"\n` +
         `  }\n` +
         `}\n` +
         `and execute command \`topcoder fetch-artifacts\` to fetch submissions for` +
