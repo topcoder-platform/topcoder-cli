@@ -1,12 +1,74 @@
 #!/usr/bin/env node
 
-const program = require('commander')
+const { Command } = require('commander')
 const submissionHandler = require('../src/commands/submit')
 const payHandler = require('../src/commands/pay')
 const configHandler = require('../src/commands/config')
 const fetchSubmissionHandler = require('../src/commands/fetchSubmissions')
 const fetchArtifactsHandler = require('../src/commands/fetchArtifacts')
 const logger = require('../src/common/logger')
+
+const docs = {
+  submit: `\nEither use CLI parameters or Create a file .topcoderrc in JSON ` +
+  `format with below details\n` +
+  `{\n` +
+  `  "memberId": "<Topcoder memberId",\n` +
+  `  "challengeIds": [\n` +
+  `    "30095545" // at least one item here\n` +
+  `  ],\n` +
+  `  "username": "<Topcoder username>",\n` +
+  `  "password": "<Topcoder password>",\n` +
+  `  "m2m": {\n` +
+  `    "client_id": "<Client ID for M2M authentication>",\n` +
+  `    "client_secret": "<Client Secret for M2M authentication>"\n` +
+  `  }\n` +
+  `}\n` +
+  `and execute command \`topcoder submit\` to submit the contents of ` +
+  `current working directory except .topcoderrc file to the challenge.\n` +
+  `You'd need either the m2m config or the username and password, but ` +
+  `not both.`,
+  'fetch-submissions': `\nUse CLI parameters or create a file .topcoderrc in JSON format with below details\n` +
+  `{\n` +
+  `  "memberId": "<Topcoder memberId",\n` +
+  `  "challengeId": "<Topcoder challengeId",\n` +
+  `  "submissionId": "<Topcoder submissionId",\n` +
+  `  "latest": true,\n` +
+  `  "username": "<Topcoder username>",\n` +
+  `  "password": "<Topcoder password>",\n` +
+  `  "m2m": {\n` +
+  `    "client_id": "<Client ID for M2M authentication>",\n` +
+  `    "client_secret": "<Client Secret for M2M authentication>"\n` +
+  `  }\n` +
+  `}\n` +
+  `and execute command \`topcoder fetch-submissions\` to fetch submissions ` +
+  `for a challenge and save them.\n` +
+  `You may specify the m2m config or the username and password config, ` +
+  `but not both.\n` +
+  `If the submissionId parameter is provided, you must not provide the ` +
+  `memberId or the latest parameters.\n` +
+  `The challengeId parameter is always required.`,
+  'fetch-artifacts': `\nUse CLI parameters or create a file .topcoderrc in JSON format ` +
+  `with below details\n` +
+  `{\n` +
+  `  "submissionId": "<Topcoder submissionId>",\n` +
+  `  "legacySubmissionId": "<Topcoder legacySubmissionId>",\n` +
+  `  "username": "<Topcoder username>",\n` +
+  `  "password": "<Topcoder password>",\n` +
+  `  "m2m": {\n` +
+  `    "client_id": "<Client ID for M2M authentication>",\n` +
+  `    "client_secret": "<Client Secret for M2M authentication>"\n` +
+  `  }\n` +
+  `}\n` +
+  `and execute command \`topcoder fetch-artifacts\` to fetch submissions for` +
+  ` a challenge and save them.\n` +
+  `You may specify the m2m config or the username and password config, ` +
+  `but not both.\n` +
+  `If the submissionId parameter is provided, you must not provide the the ` +
+  `legacySubmissionId parameters, and vice-versa.`
+
+}
+
+const program = new Command()
 
 // Overall help text which will be displayed after usage information
 program.on('--help', () => {
@@ -30,26 +92,7 @@ program
   )
   .option('--dev', 'Points to Topcoder development environment')
   .on('--help', () => {
-    console.log(
-      `\nEither use CLI parameters or Create a file .topcoderrc in JSON ` +
-        `format with below details\n` +
-        `{\n` +
-        `  "memberId": "<Topcoder memberId",\n` +
-        `  "challengeIds": [\n` +
-        `    "30095545" // at least one item here\n` +
-        `  ],\n` +
-        `  "username": "<Topcoder username>",\n` +
-        `  "password": "<Topcoder password>",\n` +
-        `  "m2m": {\n` +
-        `    "client_id": "<Client ID for M2M authentication>",\n` +
-        `    "client_secret": "<Client Secret for M2M authentication>"\n` +
-        `  }\n` +
-        `}\n` +
-        `and execute command \`topcoder submit\` to submit the contents of ` +
-        `current working directory except .topcoderrc file to the challenge.\n` +
-        `You'd need either the m2m config or the username and password, but ` +
-        `not both.`
-    )
+    console.log(docs.submit)
   })
   .action(async args => {
     try {
@@ -82,28 +125,7 @@ program
   .option('-l, --latest', 'fetch only the latest submission of each member')
   .option('--dev', 'Points to Topcoder development environment')
   .on('--help', () => {
-    console.log(
-      `\nUse CLI parameters or create a file .topcoderrc in JSON format with below details\n` +
-        `{\n` +
-        `  "memberId": "<Topcoder memberId",\n` +
-        `  "challengeId": "<Topcoder challengeId",\n` +
-        `  "submissionId": "<Topcoder submissionId",\n` +
-        `  "latest": true,\n` +
-        `  "username": "<Topcoder username>",\n` +
-        `  "password": "<Topcoder password>",\n` +
-        `  "m2m": {\n` +
-        `    "client_id": "<Client ID for M2M authentication>",\n` +
-        `    "client_secret": "<Client Secret for M2M authentication>"\n` +
-        `  }\n` +
-        `}\n` +
-        `and execute command \`topcoder fetch-submissions\` to fetch submissions ` +
-        `for a challenge and save them.\n` +
-        `You may specify the m2m config or the username and password config, ` +
-        `but not both.\n` +
-        `If the submissionId parameter is provided, you must not provide the ` +
-        `memberId or the latest parameters.\n` +
-        `The challengeId parameter is always required.`
-    )
+    console.log(docs['fetch-submissions'])
   })
   .action(async args => {
     try {
@@ -132,24 +154,7 @@ program
   .option('--dev', 'Points to Topcoder development environment')
   .on('--help', () => {
     console.log(
-      `\nUse CLI parameters or create a file .topcoderrc in JSON format ` +
-        `with below details\n` +
-        `{\n` +
-        `  "submissionId": "<Topcoder submissionId>",\n` +
-        `  "legacySubmissionId": "<Topcoder legacySubmissionId>",\n` +
-        `  "username": "<Topcoder username>",\n` +
-        `  "password": "<Topcoder password>",\n` +
-        `  "m2m": {\n` +
-        `    "client_id": "<Client ID for M2M authentication>",\n` +
-        `    "client_secret": "<Client Secret for M2M authentication>"\n` +
-        `  }\n` +
-        `}\n` +
-        `and execute command \`topcoder fetch-artifacts\` to fetch submissions for` +
-        ` a challenge and save them.\n` +
-        `You may specify the m2m config or the username and password config, ` +
-        `but not both.\n` +
-        `If the submissionId parameter is provided, you must not provide the the ` +
-        `legacySubmissionId parameters, and vice-versa.`
+      docs['fetch-artifacts']
     )
   })
   .action(async args => {
@@ -186,7 +191,7 @@ program
     if (args.dev) {
       process.env.NODE_ENV = 'dev'
     }
-    payHandler.handleCommand(args)
+    payHandler.handleCommand(program.args)
   })
 
 // error on unknown commands
@@ -199,9 +204,16 @@ program.on('command:*', function () {
   process.exit(1)
 })
 
-program.parse(process.argv)
+/* istanbul ignore next */
+if (!module.parent) {
+  program.parse(process.argv)
+  // If the CLI is invoked without any command, display help
+  if (process.argv.length < 3) {
+    program.help()
+  }
+}
 
-// If the CLI is invoked without any command, display help
-if (process.argv.length < 3) {
-  program.help()
+module.exports = {
+  program,
+  docs
 }

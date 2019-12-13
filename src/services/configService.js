@@ -51,7 +51,7 @@ async function addToConfigFile (key, value) {
 
   let config = ini.parse('')
   try {
-    config = readFromConfigFile()
+    config = await readFromConfigFile()
   } catch (error) {
     // catching .tcconfig file not found error here.
     logger.info('Topcoder config file not found, creating file in' + homedir)
@@ -66,19 +66,15 @@ async function addToConfigFile (key, value) {
  * @param {String} keyToBeDeleted Property key (to be deleted)
  */
 async function deleteFromConfigFile (keyToBeDeleted) {
-  const config = readFromConfigFile()
-  let isDeleted = false
-
-  isDeleted = _.unset(config, keyToBeDeleted)
-
-  if (isDeleted) {
-    await fs.writeFile(configPath, ini.stringify(config))
-    logger.info(
-      `${keyToBeDeleted} is removed from the config file successfully.`
-    )
-  } else {
-    throw new Error(`${keyToBeDeleted} is not found in the config fle.`)
+  const config = await readFromConfigFile()
+  if (_.isUndefined(_.get(config, keyToBeDeleted))) {
+    throw new Error(`${keyToBeDeleted} is not found in the config file.`)
   }
+  _.unset(config, keyToBeDeleted)
+  await fs.writeFile(configPath, ini.stringify(config))
+  logger.info(
+    `${keyToBeDeleted} is removed from the config file successfully.`
+  )
 }
 
 module.exports = {

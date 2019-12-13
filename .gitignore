@@ -143,3 +143,5 @@ public/
 
 # package-lock.json vary while installing on different operating system
 package-lock.json
+submission-*-artifacts
+*-submissions
