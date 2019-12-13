@@ -49,11 +49,11 @@ npm install -g .
 
 Later on you will be able to run `topcoder` command from any directory
 
-## Test
+## Unit test
 
 - Install dependencies `npm install`
 
-To run tests alone
+To run unit tests alone
 
 ```bash
 npm run test
