@@ -32,11 +32,7 @@ module.exports = {
       searchSubmissions: require('./submissions.json'),
       searchArtifacts: {
         artifacts: [
-          'c781b043-17c1-45a5-9004-8515286a1997',
-          'e9821bb7-1a78-42ac-aea7-deeea14f7dd8',
-          '633591fe-e26b-4e48-bb11-bf83b25d65ae',
-          '1d1c7358-627b-48b2-a201-1fa949052e78',
-          '3917cebb-2f22-4172-a19e-507d1fad83b3'
+          'c781b043-17c1-45a5-9004-8515286a1997'
         ]
       }
     },
