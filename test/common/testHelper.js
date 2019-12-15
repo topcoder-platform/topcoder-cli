@@ -96,6 +96,7 @@ function mockGlobalConfig (config) {
  */
 function mockDownload (downloadInfo) {
   let data
+  const noCreateDirs = mockFunction(fs, 'mkdirp', () => {})
   const mockWriteStream = mockFunction(fs, 'createWriteStream', () => {
     const writer = new ObjectWritableMock()
     writer.on('finish', () => {
@@ -108,6 +109,7 @@ function mockDownload (downloadInfo) {
   })
   return {
     restore: () => {
+      noCreateDirs.restore()
       mockWriteStream.restore()
       mockMoveFile.restore()
     }
