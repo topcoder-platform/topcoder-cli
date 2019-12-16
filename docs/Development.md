@@ -12,11 +12,12 @@ The following parameters can be set in config files or in env variables:
 | Property               | Environment varible     | Default value                              | Description                            |
 | ---                    | ---                     | ---                                        | ---                                    |
 | LOG_LEVEL              | LOG_LEVEL               | info                                       | control log level                      |
-| SUBMISSION_API_URL     | TEST_SUBMISSION_API_URL | https://api.topcoder.com/v5/submissions    | the TC submission API URL              |
+| SUBMISSION_API_URL     | TEST_SUBMISSION_API_URL | https://api.topcoder.com/v5    | the TC submission API URL              |
 | TC_AUTHN_URL           | TC_AUTHN_URL            | https://topcoder.auth0.com/oauth/ro        | API that is used to fetch JWT token v2 |
 | TC_AUTHZ_URL           | TC_AUTHZ_URL            | https://api.topcoder.com/v3/authorizations | API that is used to fetch JWT token v3 |
 | TC_CLIENT_ID           | TC_CLIENT_ID            | 6ZwZEUo2ZK4c50aLPpgupeg5v2Ffxp9P           | TC client ID                           |
 | TC_CLIENT_V2CONNECTION | CLIENT_V2CONNECTION     | TC-User-Database                           | TC client connection protocol          |
+| AUTH0_AUDIENCE         | AUTH0_AUDIENCE          | https://m2m.topcoder.com/                  | AUTH0 Audience (For M2M)               |
 
 # Publish the package to npm
 - Create a npm account on https://www.npmjs.com/signup if you don't have one.
@@ -30,12 +31,20 @@ The following parameters can be set in config files or in env variables:
   After that, run `npm publish` again to republish the package.
 - If you want to remove the package from npm registry anyway, run `npm unpublish --force` under the root directory of the project.
 
-# test
+## Installing globally
 
-## Prepare
-- Install dependencies `npm install`
+To install the tool globally so that you can test it's working, run the below command from project root directory.
+
+```
+npm install -g .
+```
+
+Later on you will be able to run `topcoder` command from any directory
 
 ## Unit test
+
+- Install dependencies `npm install`
+
 To run unit tests alone
 
 ```bash

@@ -1,210 +1,119 @@
 const _ = require('lodash')
-const Joi = require('joi')
-const fs = require('fs')
-const config = require('config')
-const request = require('superagent')
-const AdmZip = require('adm-zip')
-const glob = require('fast-glob')
-const path = require('path')
-const ProgressBar = require('progress')
-const constants = require('../../constants')
+const Joi = require('@hapi/joi')
+const fs = require('fs-extra')
+const submissionApi = require('@topcoder-platform/topcoder-submission-api-wrapper')
 const logger = require('./logger')
+const configService = require('../services/configService')
 
-const schemaForRC = Joi.object({
-  challengeIds: Joi.array().min(1).required(),
-  username: Joi.string().required(),
-  password: Joi.string().required()
+const defaultAuthSchema = Joi.object({
+  username: Joi.string(),
+  password: Joi.string(),
+  m2m: Joi.object({
+    client_id: Joi.string().required(),
+    client_secret: Joi.string().required()
+  })
 })
+  .or('username', 'm2m')
+  .xor('username', 'm2m')
+  .with('username', 'password')
+  .with('password', 'username')
 
 /**
  * Read configuration from given topcoder rc file.
- *
  * @param {String} filename the name of the rc file
+ * @param {Object} cliParams CLI params passed to the program
  * @returns {Object} the rc object
  */
-function readFromRCFile (filename) {
-  logger.info('Reading from topcoder rc file...')
-  const rcObject = JSON.parse(fs.readFileSync(filename).toString())
-  return validateRCObject(rcObject)
-}
-
-/**
- * Validate rc configuration.
- *
- * @param {Object} rcObject the rc object
- * @returns {Object} the rc object
- */
-function validateRCObject (rcObject) {
-  try {
-    Joi.attempt(rcObject, schemaForRC)
-  } catch (err) {
-    logger.error(err)
-    throw Error(`RC validation failed: ${err.message}`)
+async function readFromRCFile (filename, cliParams, schema, validCLIParams) {
+  function removeEmptyValues (object) {
+    return _.reduce(
+      object,
+      (acc, val, key) => {
+        if (_.isNil(val)) {
+          return acc
+        }
+        if (_.isObject(val)) {
+          const cleansedVal = removeEmptyValues(val)
+          if (_.size(cleansedVal) > 0) {
+            acc[key] = val
+          }
+          return acc
+        }
+        acc[key] = val
+        return acc
+      },
+      {}
+    )
   }
-  return rcObject
-}
+  let rcObject = {}
+  // Read if Topcoder RC file exists
+  const fileExists = await fs.exists(filename)
+  if (fileExists) {
+    logger.info('Reading from topcoder rc file...')
+    rcObject = await fs.readJSON(filename)
+  }
 
-/**
- * Create a zip buffer from given folder.
- * The topcoder rc file is excluded.
- *
- * @param {String} prefix the target directory
- * @returns {Buffer} the result zip buffer
- */
-function archiveCodebase (prefix) {
-  logger.info('Packaging submission...')
-  const filenames = glob.sync(['**/*'], {
-    cwd: prefix,
-    dot: true,
-    ignore: [
-      constants.rc.name
-    ],
-    onlyFiles: true
-  })
-  const zip = new AdmZip()
-  for (const filename of filenames) {
-    const pathname = path.join(prefix, filename)
-    // include files in cwd and subdirectories
-    const dirname = path.dirname(filename)
-    if (dirname === '.') {
-      zip.addLocalFile(pathname)
-      continue
+  if (!_.isEmpty(_.get(cliParams, 'challengeIds'))) {
+    cliParams.challengeIds = cliParams.challengeIds.split(',')
+  }
+
+  // Override values from RC file with CLI params
+  let mergedCred = removeEmptyValues(
+    _.merge(
+      rcObject,
+      _.pick(cliParams, [...validCLIParams, 'username', 'password'])
+    )
+  )
+
+  // Read from Global config only if there are no overrides from RC file or CLI
+  if (!(_.has(mergedCred, 'username') || _.has(mergedCred, 'm2m.client_id'))) {
+    const globalConfig = await configService.readFromConfigFile()
+    if ('username' in globalConfig) {
+      mergedCred = _.merge(
+        mergedCred,
+        _.pick(globalConfig, ['username', 'password'])
+      )
+    } else if ('m2m' in globalConfig) {
+      mergedCred = _.merge(mergedCred, _.pick(globalConfig, ['m2m']))
     }
-    zip.addLocalFile(pathname, dirname)
   }
-  const buffer = zip.toBuffer()
-  return buffer
+  try {
+    return Joi.attempt(mergedCred, schema)
+  } catch (err) {
+    throw new Error(`Validation failed: ${err.message}`)
+  }
 }
 
-/**
- * Create a submission.
- *
- * @param {String} submissionName the submission name
- * @param {Buffer} submissionData the submission data
- * @param {String} token a JWT token for authorization
- * @param {String} userId the user id
- * @param {String} challengeId the challenge id
- * @returns {Promise} the created submission
- */
-async function createSubmission (submissionName, submissionData, token, userId, challengeId) {
-  logger.info(`Uploading submission on challenge ${challengeId}...`)
-  let bar
-  return request
-    .post(config.SUBMISSION_API_URL)
-    .set('Authorization', `Bearer ${token}`)
-    .field({
-      type: constants.submissionType.contestSubmission,
-      memberId: userId,
-      challengeId: challengeId
-    })
-    .attach('submission', submissionData, submissionName)
-    .on('progress', event => {
-      if (!bar) {
-        bar = new ProgressBar(`  uploading [:bar] :percent [Total: ${_humanFileSize(event.total)}]`, {
-          complete: '=',
-          incomplete: ' ',
-          width: 20,
-          total: event.total
-        })
-      }
-      bar.tick(event.loaded)
-      if (event.loaded === event.total) {
-        setInterval(() => {
-          process.stdout.write('.')
-        }, 1000)
-      }
-    })
-}
-
-/**
- * Convert byte to human-readable size.
- *
- * @param {Number} size the size in byte
- * @returns {String} the size human-readable
- */
-function _humanFileSize (size) {
-  const i = Math.floor(Math.log(size) / Math.log(1024))
-  return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
-}
-
-/**
- * Create token from credentials.
- *
- * @param {String} username the TC login username
- * @param {String} password the TC login password
- * @returns {String} JWT token that can be used in fetching TC resources.
- */
-async function tokenFromCredentials (username, password) {
-  logger.info('Fetching JWT token from TC Auth service...')
-  const v2Token = await request
-    .post(config.TC_AUTHN_URL)
-    .set('cache-control', constants.cacheControl.noCache)
-    .set('content-type', constants.contentType.json)
-    .send({
-      username: username,
-      password: password,
-      client_id: config.TC_CLIENT_ID,
-      sso: constants.sso,
-      scope: constants.scope,
-      response_type: constants.responseType,
-      connection: config.TC_CLIENT_V2CONNECTION,
-      grant_type: constants.grantType,
-      device: constants.device
-    })
-  const res = await _tokenV3FromV2(v2Token.body)
-  return _.get(res, 'body.result.content.token')
-}
-
-/**
- * Fetch v3 token.
- *
- * @param {Object} v2Token the v2 token
- * @returns {Object} response that contains v3 token
- */
-async function _tokenV3FromV2 (v2Token) {
-  return request
-    .post(config.TC_AUTHZ_URL)
-    .set('cache-control', constants.cacheControl.noCache)
-    .set('authorization', `Bearer ${v2Token['id_token']}`)
-    .set('content-type', constants.contentType.json)
-    .send({
-      param: {
-        externalToken: v2Token['id_token'],
-        refreshToken: _.get(v2Token, 'refresh_token', '')
-      }
-    })
-}
-
-/**
- * Get user ID
- *
- * @param {String} username the username
- * @returns {String} the user's ID
- */
-async function getUserId (username) {
-  const res = await request
-    .get(`${config.TC_MEMBERS_API}/${username}`)
-    .set('cache-control', constants.cacheControl.noCache)
-    .set('content-type', constants.contentType.json)
-  return _.get(res, 'body.result.content.userId')
-}
-
-/**
- * Make a unique filename from user ID.
- *
- * @param {String} userId the user ID
- * @returns {String} result submission name
- */
-function submissionNameFromUserId (userId) {
-  return `${userId}.zip`
+function getAPIClient (userName, password, m2m) {
+  const config = require('../config')()
+  let clientConfig
+  if (userName && password) {
+    clientConfig = _.pick(config, [
+      'TC_AUTHN_URL',
+      'TC_AUTHZ_URL',
+      'TC_CLIENT_ID',
+      'TC_CLIENT_V2CONNECTION',
+      'SUBMISSION_API_URL'
+    ])
+    clientConfig.USERNAME = userName
+    clientConfig.PASSWORD = password
+  } else {
+    clientConfig = _.pick(config, [
+      'AUTH0_URL',
+      'AUTH0_AUDIENCE',
+      'TOKEN_CACHE_TIME',
+      'SUBMISSION_API_URL',
+      'AUTH0_PROXY_SERVER_URL'
+    ])
+    clientConfig.AUTH0_CLIENT_ID = m2m.client_id
+    clientConfig.AUTH0_CLIENT_SECRET = m2m.client_secret
+  }
+  const submissionApiClient = submissionApi(clientConfig)
+  return submissionApiClient
 }
 
 module.exports = {
   readFromRCFile,
-  validateRCObject,
-  archiveCodebase,
-  createSubmission,
-  tokenFromCredentials,
-  submissionNameFromUserId,
-  getUserId
+  getAPIClient,
+  defaultAuthSchema
 }

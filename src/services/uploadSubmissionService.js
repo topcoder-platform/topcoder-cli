@@ -1,46 +1,149 @@
 /*
  * Upload user submission.
  */
-const helper = require('../common/helper')
-const constants = require('../../constants')
+const _ = require('lodash')
 const path = require('path')
+const AdmZip = require('adm-zip')
+const glob = require('fast-glob')
+const request = require('superagent')
+const helper = require('../common/helper')
 const logger = require('../common/logger')
+const constants = require('../../constants')
+const Joi = require('@hapi/joi')
+const config = require('../config')()
+
+let submissionApiClient
+
+// Schema for validating RC Params
+const schemaForRC = helper.defaultAuthSchema
+  .keys({
+    challengeIds: Joi.array()
+      .min(1)
+      .required(),
+    memberId: Joi.number()
+      .integer()
+      .min(1)
+  })
+  .with('m2m', 'memberId')
+  .unknown()
+
+// Acceptable CLI params
+const validCLIParams = ['challengeIds', 'memberId']
 
 /**
- * Provide high-level functionality for upload a submission.
- * Under current working directory, it archives all files except rc file and
- * read rc configuration from the .topcoderrc file.
- *
- * @returns {undefined}
+ * Create a zip buffer from given folder.
+ * The topcoder rc file is excluded.
+ * @param {String} prefix the target directory
+ * @returns {Buffer} the result zip buffer
  */
-async function smart (prefix) {
-  const { username, password, challengeIds } = helper.readFromRCFile(path.join(prefix, constants.rc.name))
-  const userId = await helper.getUserId(username)
-  const submissionName = helper.submissionNameFromUserId(userId)
-  const submissionData = helper.archiveCodebase(prefix)
-  const token = await helper.tokenFromCredentials(username, password)
-  await basic(submissionName, submissionData, token, userId, challengeIds)
+function archiveCodebase (prefix) {
+  logger.info('Packaging submission...')
+  const filenames = glob.sync(['**/*'], {
+    cwd: prefix,
+    dot: true,
+    ignore: [constants.rc.name, 'node_modules'],
+    onlyFiles: true
+  })
+  const zip = new AdmZip()
+  for (const filename of filenames) {
+    const pathname = path.join(prefix, filename)
+    // include files in cwd and subdirectories
+    const dirname = path.dirname(filename)
+    if (dirname === '.') {
+      zip.addLocalFile(pathname)
+      continue
+    }
+    zip.addLocalFile(pathname, dirname)
+  }
+  return zip.toBuffer()
 }
 
 /**
- * Provide the basic functionality for upload a submission to multiple challenges.
- *
+ * Create a submission.
  * @param {String} submissionName the submission name
- * @param {String} submissionData the submission data; encoded string
- * @param {String} token a JWT token for authorization
- * @param {String} userId the user id
- * @param {Array} challengeIds the array of challenge IDs
- * @returns {undefined}
+ * @param {Buffer} submissionData the submission data
+ * @param {String} userId User ID
+ * @param {String} userName User name
+ * @param {String} password User password
+ * @param {Array} challengeIds the challenge ids
+ * @returns {Promise} the created submission
  */
-async function basic (submissionName, submissionData, token, userId, challengeIds) {
-  for (const challengeId of challengeIds) {
-    await helper.createSubmission(submissionName, submissionData, token, userId, challengeId)
+async function createSubmissions (
+  submissionName,
+  submissionData,
+  userId,
+  challengeIds
+) {
+  for (let idx = 0; idx < challengeIds.length; idx++) {
+    const challengeId = challengeIds[idx]
+    try {
+      logger.info(
+        `[${idx + 1}/${challengeIds.length}] ` +
+          `Uploading Submission: [ Challenge ID: ${challengeId} ]`
+      )
+      const submissionPayload = {
+        memberId: userId,
+        challengeId: challengeId,
+        type: constants.submissionType.contestSubmission,
+        submission: {
+          name: submissionName,
+          data: submissionData
+        }
+      }
+      const submission = await submissionApiClient.createSubmission(
+        submissionPayload
+      )
+      logger.info(
+        `[${idx + 1}/${challengeIds.length}] ` +
+          `Uploaded Submission: [ Submission ID: ${submission.body.id} | ` +
+          `Challenge ID: ${submission.body.challengeId} ]`
+      )
+    } catch (err) {
+      logger.error(
+        `Error while uploading submission to challenge ID ${challengeId}. Detail - ${err.message}`
+      )
+    }
   }
 }
 
+/**
+ * Provides functionality for uploading a submission.
+ * Under current working directory, it archives all files except rc file and
+ * read rc configuration from the .topcoderrc file.
+ * @param {String} currDir Path to current directory
+ * @param {Object} cliParams CLI params passed to the program
+ * @returns {Array} Uploaded submissions
+ */
+async function processSubmissions (currDir, cliParams) {
+  const params = cliParams.opts()
+  const rcPath = path.join(currDir, constants.rc.name)
+  const {
+    username,
+    password,
+    challengeIds,
+    memberId,
+    m2m
+  } = await helper.readFromRCFile(rcPath, params, schemaForRC, validCLIParams)
+
+  submissionApiClient = helper.getAPIClient(username, password, m2m)
+
+  let userId = memberId
+  if (_.isNil(userId)) {
+    const res = await request
+      .get(`${config.TC_MEMBERS_API}/${username}`)
+      .set('cache-control', constants.cacheControl.noCache)
+      .set('content-type', constants.contentType.json)
+    userId = _.get(res, 'body.result.content.userId')
+  }
+
+  const submissionName = `${userId}.zip`
+  const submissionData = archiveCodebase(currDir)
+
+  return createSubmissions(submissionName, submissionData, userId, challengeIds)
+}
+
 module.exports = {
-  smart,
-  basic
+  processSubmissions
 }
 
 logger.buildService(module.exports)
