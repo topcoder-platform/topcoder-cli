@@ -21,6 +21,7 @@ const uuidExpr = '\\b[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a
 
 prepare(
   function (done) {
+    testHelper.spyActions()
     nock(/.com/)
       .persist()
       .filteringPath(path => {

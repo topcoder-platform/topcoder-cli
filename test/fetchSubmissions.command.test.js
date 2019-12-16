@@ -2,14 +2,12 @@
  * Test for the FetchSubmissions command.
  */
 const chai = require('chai')
-const delay = require('delay')
 const path = require('path')
 const _ = require('lodash')
 
 const logger = require('../src/common/logger')
 const testHelper = require('./common/testHelper')
 const testData = require('./common/testData')
-const testConfig = require('./common/testConfig')
 let { program } = require('../bin/topcoder-cli')
 
 const challengeId = '30095545'
@@ -89,7 +87,7 @@ describe('FetchSubmissions Command Test', async function () {
 
   it('success - fetch submissions to local', async function () {
     program.parse(localTestData.argsWithChallengeId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(testData._variables.submissionDownloadInfo.length).to.equal(
       testData.responses.submissionAPI.searchSubmissions.length
     )
@@ -104,7 +102,7 @@ describe('FetchSubmissions Command Test', async function () {
       mocks.returnEmptyRC.restore()
       mocks.mockRCConfig = testHelper.mockRCConfig({ challengeId, ...credentials })
       program.parse(localTestData.argsBasic)
-      await delay(testConfig.WAIT_TIME)
+      await testHelper.waitForCommandExit()
       chai.expect(testData._variables.submissionDownloadInfo.length).to.equal(
         testData.responses.submissionAPI.searchSubmissions.length
       )
@@ -117,7 +115,7 @@ describe('FetchSubmissions Command Test', async function () {
       mocks.mockRCConfig = testHelper.mockRCConfig({ challengeId })
       mocks.mockGlobalConfig = testHelper.mockGlobalConfig(credentials)
       program.parse(localTestData.argsBasic)
-      await delay(testConfig.WAIT_TIME)
+      await testHelper.waitForCommandExit()
       chai.expect(testData._variables.submissionDownloadInfo.length).to.equal(
         testData.responses.submissionAPI.searchSubmissions.length
       )
@@ -127,7 +125,7 @@ describe('FetchSubmissions Command Test', async function () {
 
   it('success - fetch submissions to local with argument dev', async function () {
     program.parse(localTestData.argsWithDev)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(process.env.NODE_ENV).to.equal('dev')
     chai.expect(testData._variables.submissionDownloadInfo.length).to.equal(
       testData.responses.submissionAPI.searchSubmissions.length
@@ -137,54 +135,54 @@ describe('FetchSubmissions Command Test', async function () {
 
   it('success - fetch submissions to local with argument latest', async function () {
     program.parse(localTestData.argsWithLatest)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(testData._variables.submissionDownloadInfo.length).to.equal(2)
     checkDownloadedSubmissions()
   })
 
   it('success - fetch submissions to local with argument memberId', async function () {
     program.parse(localTestData.argsWithMemberId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(testData._variables.submissionDownloadInfo.length).to.equal(1)
     checkDownloadedSubmissions()
   })
 
   it('success - fetch submissions to local with argument submissionId', async function () {
     program.parse(localTestData.argsWithSubmissionId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(testData._variables.submissionDownloadInfo.length).to.equal(1)
     checkDownloadedSubmissions()
   })
 
   it('success - show info if no submissions found', async function () {
     program.parse(localTestData.argsWithChallengeIdContainingZeroSubmissions)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.nth(messages, -2)).to.equal(`No submissions exists with specified filters for challenge with ID: ${testData.challengeIdWithZeroSubmissions}.`)
     chai.expect(_.nth(messages, -1)).to.equal('All Done!')
   })
 
   it('failure - fetch submissions without challengeId', async function () {
     program.parse(localTestData.argsWithoutChallengeId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('"challengeId" is required')
   })
 
   it('failure - fetch submissions with submissionId not belong to a challenge', async function () {
     program.parse(localTestData.argsWithSubmissionIdNotInChallenge)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('Submission doesn\'t belong to specified challenge.')
   })
 
   it('failure - it should handle possible request errors', async function () {
     testData._variables.needErrorResponse = true // instruct nock server to return 500
     program.parse(localTestData.argsWithSubmissionId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.nth(errorMessages, -2)).to.include(`Couldn't download submission with id: ${submissionId}`)
   })
 
   it('failure - fetch submissions missing password', async function () {
     program.parse(localTestData.argsWithoutPassword)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('"username" missing required peer "password"')
   })
 
@@ -194,7 +192,7 @@ describe('FetchSubmissions Command Test', async function () {
     mocks.mockRCConfig = testHelper.mockRCConfig({ challengeId })
     mocks.mockGlobalConfig = testHelper.mockGlobalConfig(_.pick(testData.m2mConfig, ['m2m.client_secret']))
     program.parse(localTestData.argsBasic)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('m2m.client_id" is required')
   })
 
@@ -204,7 +202,7 @@ describe('FetchSubmissions Command Test', async function () {
     mocks.mockRCConfig = testHelper.mockRCConfig({ challengeId })
     mocks.mockGlobalConfig = testHelper.mockGlobalConfig(_.pick(testData.m2mConfig, ['m2m.client_id']))
     program.parse(localTestData.argsBasic)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('m2m.client_secret" is required')
   })
 
@@ -212,19 +210,19 @@ describe('FetchSubmissions Command Test', async function () {
     mocks.returnEmptyRC.restore()
     mocks.mockRCConfig = testHelper.mockRCConfig({ challengeId, ...testData.m2mConfig })
     program.parse(localTestData.argsWithChallengeId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('contains a conflict between exclusive peers [username, m2m]')
   })
 
   it('failure - fetch submissions provided both submissionId and memberId', async function () {
     program.parse(localTestData.argsWithBothSubmissionIdAndMemberId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('Validation failed: "submissionId" conflict with forbidden peer "memberId"')
   })
 
   it('failure - fetch submissions provided both submissionId and latest', async function () {
     program.parse(localTestData.argsWithBothSubmissionIdAndLatest)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('Validation failed: "submissionId" conflict with forbidden peer "latest"')
   })
 })

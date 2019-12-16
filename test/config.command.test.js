@@ -2,14 +2,12 @@
  * Test for the Config command.
  */
 const chai = require('chai')
-const delay = require('delay')
 const fs = require('fs-extra')
 const _ = require('lodash')
 const ini = require('ini')
 
 const testHelper = require('./common/testHelper')
 const testData = require('./common/testData')
-const testConfig = require('./common/testConfig')
 const logger = require('../src/common/logger')
 let { program } = require('../bin/topcoder-cli')
 
@@ -67,13 +65,13 @@ describe('Config Command Test', async function () {
       }
     )
     program.parse(localTestData.argsWithList)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(messages)).to.equal(localTestData.globalConfigWithUserCredentials)
   })
 
   it('success - add global config', async function () {
     program.parse(localTestData.argsWithAdd)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(content[0]).to.include('username=aaron2017')
   })
 
@@ -81,32 +79,32 @@ describe('Config Command Test', async function () {
     mocks.readFile.restore()
     mocks.readFile = testHelper.mockFunction(fs, 'readFile', () => { throw new Error() })
     program.parse(localTestData.argsWithAdd)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(content[0]).to.include('username=aaron2017')
   })
 
   it('success - unset global config', async function () {
     program.parse(localTestData.argsWithUnset)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(content[0]).to.include('password=xxx123')
     chai.expect(content[0]).to.not.include('username=TonyJ')
   })
 
   it('failure - add global config with invalid key', async function () {
     program.parse(localTestData.argsWithAddInvalidKey)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('Invalid key value.')
   })
 
   it('failure - add global config with extra values', async function () {
     program.parse(localTestData.argsWithExtraValues)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('Invalid number of values passed.')
   })
 
   it('failure - unset global config with non-existent key', async function () {
     program.parse(localTestData.argsWithUnsetNotExistentKey)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include(`${invalidConfig[0]} is not found in the config file`)
   })
 })

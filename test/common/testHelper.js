@@ -1,16 +1,14 @@
 /*
  * Helper functions for test.
  */
-const AdmZip = require('adm-zip')
 const _ = require('lodash')
 const fs = require('fs-extra')
 const ini = require('ini')
 const { ObjectWritableMock } = require('stream-mock')
+const EventEmitter = require('events')
+const commander = require('commander')
 
-function listZipEntries (buffer) {
-  const zip = new AdmZip(buffer)
-  return zip.getEntries()
-}
+const commandEmitter = new EventEmitter()
 
 /**
  * Build command line arguments.
@@ -144,12 +142,44 @@ function parseMultipart (text) {
   return data
 }
 
+/**
+ * Inject an event emitter into every actions,
+ * so that we can inpect an action completed by listening to the `action:finish` event.
+ *
+ * @returns {undefined}
+ */
+function spyActions () {
+  const originalAction = commander.Command.prototype.action
+  commander.Command.prototype.action = function (action) {
+    originalAction.call(this, async (...args) => {
+      try {
+        await action(...args)
+      } catch (err) {
+        // ignore
+      }
+      commandEmitter.emit('action:finish')
+    })
+  }
+}
+
+/**
+ * Wait for an action finished by listening to the `action:finish` event.
+ *
+ * @returns {Promise}
+ */
+async function waitForCommandExit () {
+  return new Promise((resolve) => {
+    commandEmitter.on('action:finish', () => { resolve() })
+  })
+}
+
 module.exports = {
-  listZipEntries,
   buildArgs,
   mockFunction,
   mockRCConfig,
   mockGlobalConfig,
   mockDownload,
-  parseMultipart
+  parseMultipart,
+  spyActions,
+  waitForCommandExit
 }

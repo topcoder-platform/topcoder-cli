@@ -2,14 +2,12 @@
  * Test for the FetchArtifacts command.
  */
 const chai = require('chai')
-const delay = require('delay')
 const path = require('path')
 const _ = require('lodash')
 
 const logger = require('../src/common/logger')
 const testHelper = require('./common/testHelper')
 const testData = require('./common/testData')
-const testConfig = require('./common/testConfig')
 let { program } = require('../bin/topcoder-cli')
 
 const submissionId = '4d38573f-404c-4c2f-90b1-a05ccd3fe860'
@@ -83,7 +81,7 @@ describe('FetchArtifacts Command Test', async function () {
 
   it('success - fetch artifacts to local', async function () {
     program.parse(localTestData.argsWithSubmissionId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(testData._variables.artifactDownloadInfo.length).to.equal(
       testData.responses.submissionAPI.searchArtifacts.artifacts.length
     )
@@ -98,7 +96,7 @@ describe('FetchArtifacts Command Test', async function () {
       mocks.returnEmptyRC.restore()
       mocks.mockRCConfig = testHelper.mockRCConfig({ submissionId, ...credentials })
       program.parse(localTestData.argsBasic)
-      await delay(testConfig.WAIT_TIME)
+      await testHelper.waitForCommandExit()
       chai.expect(testData._variables.artifactDownloadInfo.length).to.equal(
         testData.responses.submissionAPI.searchArtifacts.artifacts.length
       )
@@ -111,7 +109,7 @@ describe('FetchArtifacts Command Test', async function () {
       mocks.mockRCConfig = testHelper.mockRCConfig({ submissionId })
       mocks.mockGlobalConfig = testHelper.mockGlobalConfig(credentials)
       program.parse(localTestData.argsBasic)
-      await delay(testConfig.WAIT_TIME)
+      await testHelper.waitForCommandExit()
       chai.expect(testData._variables.artifactDownloadInfo.length).to.equal(
         testData.responses.submissionAPI.searchArtifacts.artifacts.length
       )
@@ -121,7 +119,7 @@ describe('FetchArtifacts Command Test', async function () {
 
   it('success - fetch artifacts to local with argument dev', async function () {
     program.parse(localTestData.argsWithDev)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(process.env.NODE_ENV).to.equal('dev')
     chai.expect(testData._variables.artifactDownloadInfo.length).to.equal(
       testData.responses.submissionAPI.searchArtifacts.artifacts.length
@@ -131,7 +129,7 @@ describe('FetchArtifacts Command Test', async function () {
 
   it('success - fetch artifacts to local with argument legacySubmissionId', async function () {
     program.parse(localTestData.argsWithLegacySubmissionId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(testData._variables.artifactDownloadInfo.length).to.equal(
       testData.responses.submissionAPI.searchArtifacts.artifacts.length
     )
@@ -140,14 +138,14 @@ describe('FetchArtifacts Command Test', async function () {
 
   it('success - show info if no artifacts found', async function () {
     program.parse(localTestData.argsWithSubmissionIdContainingZeroArtifacts)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.nth(messages, -2)).to.equal(`No artifact exists for submission with ID: ${testData.submissionIdWithZeroArtifacts}.`)
     chai.expect(_.nth(messages, -1)).to.equal('All Done!')
   })
 
   it('failure - fetch artifacts missing password', async function () {
     program.parse(localTestData.argsWithoutPassword)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('"username" missing required peer "password"')
   })
 
@@ -157,7 +155,7 @@ describe('FetchArtifacts Command Test', async function () {
     mocks.mockRCConfig = testHelper.mockRCConfig({ submissionId })
     mocks.mockGlobalConfig = testHelper.mockGlobalConfig(_.pick(testData.m2mConfig, ['m2m.client_secret']))
     program.parse(localTestData.argsBasic)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('m2m.client_id" is required')
   })
 
@@ -167,26 +165,26 @@ describe('FetchArtifacts Command Test', async function () {
     mocks.mockRCConfig = testHelper.mockRCConfig({ submissionId })
     mocks.mockGlobalConfig = testHelper.mockGlobalConfig(_.pick(testData.m2mConfig, ['m2m.client_id']))
     program.parse(localTestData.argsBasic)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('m2m.client_secret" is required')
   })
 
   it('failure - fetch artifacts without submissionId or legacySubmissionId', async function () {
     program.parse(localTestData.argsWithoutId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('"value" must contain at least one of [submissionId, legacySubmissionId]')
   })
 
   it('failure - fetch artifacts provided both submissionId and legacySubmissionId', async function () {
     program.parse(localTestData.argsWithBothIds)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('contains a conflict between exclusive peers [submissionId, legacySubmissionId]')
   })
 
   it('failure - it should handle possible request errors', async function () {
     testData._variables.needErrorResponse = true // instruct nock server to return 500
     program.parse(localTestData.argsWithSubmissionId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.nth(errorMessages, 0)).to.include('Couldn\'t download artifact')
   })
 
@@ -194,7 +192,7 @@ describe('FetchArtifacts Command Test', async function () {
     mocks.returnEmptyRC.restore()
     mocks.mockRCConfig = testHelper.mockRCConfig({ submissionId, ...testData.m2mConfig })
     program.parse(localTestData.argsWithSubmissionId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('contains a conflict between exclusive peers [username, m2m]')
   })
 })

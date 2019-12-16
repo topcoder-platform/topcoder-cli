@@ -5,7 +5,7 @@ const logger = require('../common/logger')
  * Handles the "pay" command
  * @param {Array} args Arguments
  */
-function handleCommand (args) {
+async function handleCommand (args) {
   const options = args[0].opts()
   const challengeDetails = [
     {
@@ -45,7 +45,7 @@ function handleCommand (args) {
     logger.info(response)
     // => response => { username, age, about }
   }
-  promptQuestions()
+  await promptQuestions()
 }
 
 module.exports = {
