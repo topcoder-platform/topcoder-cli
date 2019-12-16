@@ -187,11 +187,11 @@ program
   .description('Let copilot/managers process private task payments')
   .option('-o --copilot <payment>', 'copilot payment.')
   .option('--dev', 'Points to Topcoder development environment')
-  .action(args => {
+  .action(async args => {
     if (args.dev) {
       process.env.NODE_ENV = 'dev'
     }
-    payHandler.handleCommand(program.args)
+    await payHandler.handleCommand(program.args)
   })
 
 // error on unknown commands

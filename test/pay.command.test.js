@@ -3,12 +3,10 @@
  */
 const chai = require('chai')
 const prompts = require('prompts')
-const delay = require('delay')
 const _ = require('lodash')
 
 const logger = require('../src/common/logger')
 const testHelper = require('./common/testHelper')
-const testConfig = require('./common/testConfig')
 const { program } = require('../bin/topcoder-cli')
 
 const localTestData = {
@@ -53,14 +51,14 @@ describe('Pay Command Test', async function () {
   it('prompts - it should capture user response', async function () {
     prompts.inject(Object.values(localTestData.injectedResponse))
     program.parse(localTestData.argsWithoutOption)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(messages[0]).to.eql(localTestData.injectedResponse)
   })
 
   it('prompts - it should capture user response with argument dev', async function () {
     prompts.inject(Object.values(localTestData.injectedResponse))
     program.parse(localTestData.argsWithDev)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(process.env.NODE_ENV).to.equal('dev')
     chai.expect(messages[0]).to.eql(localTestData.injectedResponse)
   })
@@ -68,7 +66,7 @@ describe('Pay Command Test', async function () {
   it('prompts - it should not ask for copilotPayment if the copilot argument is provided', async function () {
     prompts.inject(Object.values(localTestData.injectedResponse))
     program.parse(localTestData.argsWithOptionCopilot)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(messages[0]).to.eql(_.omit(localTestData.injectedResponse, 'copilotPayment'))
   })
 })

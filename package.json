@@ -43,7 +43,6 @@
   "homepage": "https://topcoder-platform.github.io/topcoder-cli/",
   "devDependencies": {
     "chai": "^4.2.0",
-    "delay": "^4.3.0",
     "mocha": "^6.1.4",
     "mocha-prepare": "^0.1.0",
     "mock-require": "^3.0.3",

@@ -2,14 +2,12 @@
  * Test for the Submit command.
  */
 const chai = require('chai')
-const delay = require('delay')
 const _ = require('lodash')
 const mock = require('mock-require')
 
 const logger = require('../src/common/logger')
 const testHelper = require('./common/testHelper')
 const testData = require('./common/testData')
-const testConfig = require('./common/testConfig')
 let { program } = require('../bin/topcoder-cli')
 
 const challengeIds = '30095545'
@@ -24,9 +22,6 @@ const uploadedSubmissionInfo = {
   submission: { headers: { filename: `${memberId}.zip` }, body: contentInSubmission }
 }
 
-const localTestConfig = {
-  WAIT_TIME: testConfig.WAIT_TIME
-}
 const localTestData = {
   argsBasic: testHelper.buildArgs('submit'),
   argsWithChallengeIds: testHelper.buildArgs('submit', { ...testData.userCredentials, challengeIds }),
@@ -100,7 +95,7 @@ describe('Submit Command Test', async function () {
 
   it('success - upload a submission', async function () {
     program.parse(localTestData.argsWithChallengeIds)
-    await delay(localTestConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.nth(messages, -2)).to.include('[1/1] Uploaded Submission:')
     chai.expect(_.last(messages)).to.include('All Done!')
     chai.expect(testData._variables.uploadedSubmissionInfo[0]).to.eql(localTestData.uploadedSubmissionInfo)
@@ -114,7 +109,7 @@ describe('Submit Command Test', async function () {
       mocks.returnEmptyRC.restore()
       mocks.mockRCConfig = testHelper.mockRCConfig({ challengeIds: [challengeIds], memberId: localTestData.memberId, ...credentials })
       program.parse(localTestData.argsBasic)
-      await delay(localTestConfig.WAIT_TIME)
+      await testHelper.waitForCommandExit()
       chai.expect(_.nth(messages, -2)).to.include('[1/1] Uploaded Submission:')
       chai.expect(_.last(messages)).to.include('All Done!')
       chai.expect(testData._variables.uploadedSubmissionInfo[0]).to.eql(localTestData.uploadedSubmissionInfo)
@@ -126,7 +121,7 @@ describe('Submit Command Test', async function () {
       mocks.mockRCConfig = testHelper.mockRCConfig({ challengeIds: [challengeIds], memberId: localTestData.memberId })
       mocks.mockGlobalConfig = testHelper.mockGlobalConfig(credentials)
       program.parse(localTestData.argsBasic)
-      await delay(localTestConfig.WAIT_TIME)
+      await testHelper.waitForCommandExit()
       chai.expect(_.nth(messages, -2)).to.include('[1/1] Uploaded Submission:')
       chai.expect(_.last(messages)).to.include('All Done!')
       chai.expect(testData._variables.uploadedSubmissionInfo[0]).to.eql(localTestData.uploadedSubmissionInfo)
@@ -135,7 +130,7 @@ describe('Submit Command Test', async function () {
 
   it('success - upload a submission with argument dev', async function () {
     program.parse(localTestData.argsWithDev)
-    await delay(localTestConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(process.env.NODE_ENV).to.equal('dev')
     chai.expect(_.nth(messages, -2)).to.include('[1/1] Uploaded Submission:')
     chai.expect(_.last(messages)).to.include('All Done!')
@@ -145,19 +140,19 @@ describe('Submit Command Test', async function () {
   it('failure - it should handle possible request errors', async function () {
     testData._variables.needErrorResponse = true // instruct nock server to return 500
     program.parse(localTestData.argsWithChallengeIdsNotExist)
-    await delay(localTestConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include(`Error while uploading submission to challenge ID ${localTestData.challengeIdNotExist}`)
   })
 
   it('failure - upload a submission without challengeId', async function () {
     program.parse(localTestData.argsWithoutChallengeId)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('"challengeIds" is required')
   })
 
   it('failure - upload a submission missing password', async function () {
     program.parse(localTestData.argsWithoutPassword)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('"username" missing required peer "password"')
   })
 
@@ -165,7 +160,7 @@ describe('Submit Command Test', async function () {
     mocks.returnEmptyGlobalConfig.restore()
     mocks.mockGlobalConfig = testHelper.mockGlobalConfig(_.pick(testData.m2mConfig, ['m2m.client_secret']))
     program.parse(localTestData.argsWithOnlyChallengeIds)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('m2m.client_id" is required')
   })
 
@@ -173,7 +168,7 @@ describe('Submit Command Test', async function () {
     mocks.returnEmptyGlobalConfig.restore()
     mocks.mockGlobalConfig = testHelper.mockGlobalConfig(_.pick(testData.m2mConfig, ['m2m.client_id']))
     program.parse(localTestData.argsWithOnlyChallengeIds)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('m2m.client_secret" is required')
   })
 
@@ -181,7 +176,7 @@ describe('Submit Command Test', async function () {
     mocks.returnEmptyGlobalConfig.restore()
     mocks.mockGlobalConfig = testHelper.mockGlobalConfig(testData.m2mConfig)
     program.parse(localTestData.argsWithOnlyChallengeIds)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('Validation failed: "m2m" missing required peer "memberId"')
   })
 
@@ -189,7 +184,7 @@ describe('Submit Command Test', async function () {
     mocks.returnEmptyRC.restore()
     mocks.mockRCConfig = testHelper.mockRCConfig({ challengeIds: [challengeIds], memberId: localTestData.memberId, ...testData.m2mConfig })
     program.parse(localTestData.argsWithChallengeIds)
-    await delay(testConfig.WAIT_TIME)
+    await testHelper.waitForCommandExit()
     chai.expect(_.last(errorMessages)).to.include('contains a conflict between exclusive peers [username, m2m]')
   })
 })

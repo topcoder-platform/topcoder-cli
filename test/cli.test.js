@@ -1,13 +1,11 @@
 /*
  * Test CLI functionalities.
  */
-const delay = require('delay')
 const chai = require('chai')
 const _ = require('lodash')
 
 const { program, docs } = require('../bin/topcoder-cli')
 const testHelper = require('./common/testHelper')
-const testConfig = require('./common/testConfig')
 
 const localTestData = {
   argsWithHelp: testHelper.buildArgs(undefined, { help: true }),
@@ -57,31 +55,26 @@ describe('CLI Test', async function () {
 
   it('It should show general help info', async function () {
     program.parse(localTestData.argsWithHelp)
-    await delay(testConfig.WAIT_TIME)
     chai.expect(_.last(messages)).to.include('Topcoder CLI to interact with Topcoder systems')
   })
 
   it('It should show help documentation for command submit', async function () {
     program.parse(localTestData.argsForCommandSubmit)
-    await delay(testConfig.WAIT_TIME)
     chai.expect(_.last(messages)).to.equal(docs.submit)
   })
 
   it('It should show help documentation for command fetch-submissions', async function () {
     program.parse(localTestData.argsForCommandFetchSubmissions)
-    await delay(testConfig.WAIT_TIME)
     chai.expect(_.last(messages)).to.equal(docs['fetch-submissions'])
   })
 
   it('It should show help documentation for command fetch-artifacts', async function () {
     program.parse(localTestData.argsForCommandFetchArtifacts)
-    await delay(testConfig.WAIT_TIME)
     chai.expect(_.last(messages)).to.equal(docs['fetch-artifacts'])
   })
 
   it('failure - It should handle unknown commands', async function () {
     program.parse(localTestData.argsWithUnknownCommand)
-    await delay(testConfig.WAIT_TIME)
     chai.expect(_.last(errorMessages)).to.include('Invalid command:')
   })
 })
