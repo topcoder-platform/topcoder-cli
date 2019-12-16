@@ -25,7 +25,7 @@ The following parameters can be set in config files or in env variables:
 
 | Property  | Environment varible | Default value | Description                                                                   |
 | ---       | ---                 | ---           | ---                                                                           |
-| WAIT_TIME | WAIT_TIME           | 500           | Waiting for the CLI tool to process subcommands. Increate the value if needed |
+| WAIT_TIME | WAIT_TIME           | 500           | Waiting time for the CLI tool to process subcommands. Increase the value if needed |
 
 # Publish the package to npm
 - Create a npm account on https://www.npmjs.com/signup if you don't have one.
