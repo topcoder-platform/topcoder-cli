@@ -1,0 +1,634 @@
+[
+  {
+    "updatedBy": "aaron2017",
+    "created": "2019-12-06T07:01:43.945Z",
+    "legacySubmissionId": 336926,
+    "isFileSubmission": false,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-submissions/b8ee3343-f3cf-4f39-9618-04a70b900a68.zip",
+    "challengeId": 30109319,
+    "createdBy": "aaron2017",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "mL4037GVeLQOvb8TgU4KW38mlevpfp4y@clients",
+        "reviewerId": "b7a77c98-81ae-4511-b9c7-af0301a4a145",
+        "submissionId": "b8ee3343-f3cf-4f39-9618-04a70b900a68",
+        "createdBy": "mL4037GVeLQOvb8TgU4KW38mlevpfp4y@clients",
+        "created": "2019-12-06T07:05:00.538Z",
+        "scoreCardId": 30001850,
+        "typeId": "55bbb17d-aac2-45a6-89c3-a8d102863d05",
+        "id": "42efcd17-20a9-4ff6-92c6-d944e5f7b0bf",
+        "updated": "2019-12-06T07:05:00.538Z",
+        "status": "completed"
+      }
+    ],
+    "id": "b8ee3343-f3cf-4f39-9618-04a70b900a68",
+    "submissionPhaseId": 1219343,
+    "updated": "2019-12-06T07:01:43.945Z",
+    "fileType": "zip",
+    "memberId": 40687077
+  },
+  {
+    "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+    "created": "2019-12-02T01:21:12.844Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/4d38573f-404c-4c2f-90b1-a05ccd3fe860.zip",
+    "challengeId": 30095545,
+    "legacySubmissionId": "208870",
+    "filename": "8547899.zip",
+    "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "a29786fa-bf42-4709-b636-0cc2b64c9827",
+        "submissionId": "4d38573f-404c-4c2f-90b1-a05ccd3fe860",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-12-02T01:21:15.839Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "d234cbe9-ced9-4507-848e-d94e76419815",
+        "updated": "2019-12-02T01:21:15.839Z",
+        "status": "completed"
+      }
+    ],
+    "id": "4d38573f-404c-4c2f-90b1-a05ccd3fe860",
+    "submissionPhaseId": null,
+    "updated": "2019-12-02T01:21:12.844Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+    "created": "2019-12-02T01:18:40.879Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/bacacaa1-056f-4438-bf02-c9efe6334b2f.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "17e66d97-4742-4b63-9589-fe120ec2b984",
+        "submissionId": "bacacaa1-056f-4438-bf02-c9efe6334b2f",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-12-02T01:18:44.537Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "e551d414-8bbb-458a-a884-2ee9fb604cf4",
+        "updated": "2019-12-02T01:18:44.537Z",
+        "status": "completed"
+      }
+    ],
+    "id": "bacacaa1-056f-4438-bf02-c9efe6334b2f",
+    "submissionPhaseId": null,
+    "updated": "2019-12-02T01:18:40.879Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+    "created": "2019-12-01T22:27:46.210Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/845efeb7-1e8f-4011-89aa-fe26182229f9.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "0bd54b07-c5f0-4e02-8783-c582e0dcf9ca",
+        "submissionId": "845efeb7-1e8f-4011-89aa-fe26182229f9",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-12-01T22:27:49.625Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "69d79baa-ad11-4b1a-af3c-15ea2a1125d2",
+        "updated": "2019-12-01T22:27:49.625Z",
+        "status": "completed"
+      }
+    ],
+    "id": "845efeb7-1e8f-4011-89aa-fe26182229f9",
+    "submissionPhaseId": null,
+    "updated": "2019-12-01T22:27:46.210Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-12-01T22:27:28.595Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/1f1f3fac-c4ee-45c3-8ed8-51bb5f9c44fb.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "24aa6b77-e8ae-498e-b916-877419f80a9d",
+        "submissionId": "1f1f3fac-c4ee-45c3-8ed8-51bb5f9c44fb",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-12-01T22:27:31.971Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "b23cd5af-2c32-4f28-b07b-c7b0aa1e5bb1",
+        "updated": "2019-12-01T22:27:31.971Z",
+        "status": "completed"
+      }
+    ],
+    "id": "1f1f3fac-c4ee-45c3-8ed8-51bb5f9c44fb",
+    "submissionPhaseId": null,
+    "updated": "2019-12-01T22:27:28.595Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-12-01T22:26:37.023Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/3b9040ff-faa2-4169-b313-e663c95f688d.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "8a2d38c3-2341-4158-93b1-3002b2468539",
+        "submissionId": "3b9040ff-faa2-4169-b313-e663c95f688d",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-12-01T22:26:40.059Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "20d74dd8-32d5-42fe-bfa0-a16f13092722",
+        "updated": "2019-12-01T22:26:40.059Z",
+        "status": "completed"
+      }
+    ],
+    "id": "3b9040ff-faa2-4169-b313-e663c95f688d",
+    "submissionPhaseId": null,
+    "updated": "2019-12-01T22:26:37.023Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-12-01T22:20:58.417Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/f1a325d8-d7ae-4e8e-b35d-9af0b08c4a6b.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "98b7ff0d-1686-47d6-a1be-43b97e4a0bfa",
+        "submissionId": "f1a325d8-d7ae-4e8e-b35d-9af0b08c4a6b",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-12-01T22:21:02.112Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "cdd715df-bb65-4a72-bf21-9d9e5374a279",
+        "updated": "2019-12-01T22:21:02.112Z",
+        "status": "completed"
+      }
+    ],
+    "id": "f1a325d8-d7ae-4e8e-b35d-9af0b08c4a6b",
+    "submissionPhaseId": null,
+    "updated": "2019-12-01T22:20:58.417Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-12-01T21:57:28.396Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/c59f1eb8-8f65-467c-96e4-905c1d46ede2.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "75625efe-5bba-462d-90e3-ca27adf03458",
+        "submissionId": "c59f1eb8-8f65-467c-96e4-905c1d46ede2",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-12-01T21:57:32.286Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "61c65321-4894-45a6-ac6c-d73855cddf51",
+        "updated": "2019-12-01T21:57:32.286Z",
+        "status": "completed"
+      }
+    ],
+    "id": "c59f1eb8-8f65-467c-96e4-905c1d46ede2",
+    "submissionPhaseId": null,
+    "updated": "2019-12-01T21:57:28.396Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-12-01T17:11:57.626Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/613fe134-f6b6-424f-bbb2-5462e35b9e58.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "84cde41e-b8d3-4e8a-89eb-6a8bb9f69607",
+        "submissionId": "613fe134-f6b6-424f-bbb2-5462e35b9e58",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-12-01T17:12:03.509Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "ada53926-d379-455e-8a85-e0220eeb97f4",
+        "updated": "2019-12-01T17:12:03.509Z",
+        "status": "completed"
+      }
+    ],
+    "id": "613fe134-f6b6-424f-bbb2-5462e35b9e58",
+    "submissionPhaseId": null,
+    "updated": "2019-12-01T17:11:57.626Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-11-28T14:50:09.217Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/da8469fb-ccd3-4e87-bb8d-b2df2a1771c5.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "f6710095-ba40-499b-a691-1d158e5f69e6",
+        "submissionId": "da8469fb-ccd3-4e87-bb8d-b2df2a1771c5",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-11-28T14:50:13.395Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "d9e1748a-98f7-4465-b86f-749a689913a9",
+        "updated": "2019-11-28T14:50:13.395Z",
+        "status": "completed"
+      }
+    ],
+    "id": "da8469fb-ccd3-4e87-bb8d-b2df2a1771c5",
+    "submissionPhaseId": null,
+    "updated": "2019-11-28T14:50:09.217Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-10-08T03:15:23.194Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/52577108-cff5-4a27-8956-5b00d12f66f3.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "91950738-13d1-432c-9bb8-b262f6de8024",
+        "submissionId": "52577108-cff5-4a27-8956-5b00d12f66f3",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-10-08T03:15:27.109Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "afe5dcea-91bc-41dc-a657-457a38b2ec0d",
+        "updated": "2019-10-08T03:15:27.109Z",
+        "status": "completed"
+      }
+    ],
+    "id": "52577108-cff5-4a27-8956-5b00d12f66f3",
+    "submissionPhaseId": null,
+    "updated": "2019-10-08T03:15:23.194Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-10-08T02:10:19.078Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/658c5c61-03c3-4bec-852c-5ad83a20b418.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "fa22f273-38a8-41ce-b48f-ab33472d8afb",
+        "submissionId": "658c5c61-03c3-4bec-852c-5ad83a20b418",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-10-08T02:10:21.575Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "f4f700bb-3308-4488-8bea-22ff338a498e",
+        "updated": "2019-10-08T02:10:21.575Z",
+        "status": "completed"
+      }
+    ],
+    "id": "658c5c61-03c3-4bec-852c-5ad83a20b418",
+    "submissionPhaseId": null,
+    "updated": "2019-10-08T02:10:19.078Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-10-06T23:01:34.310Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/2f984898-de0a-442a-8eed-8d7ce8c9e6a4.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "129cbdb9-324d-499d-9f14-a4056f99b665",
+        "submissionId": "2f984898-de0a-442a-8eed-8d7ce8c9e6a4",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-10-06T23:01:38.282Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "40c2ced8-7e63-447d-bb35-0557627f4b41",
+        "updated": "2019-10-06T23:01:38.282Z",
+        "status": "completed"
+      }
+    ],
+    "id": "2f984898-de0a-442a-8eed-8d7ce8c9e6a4",
+    "submissionPhaseId": null,
+    "updated": "2019-10-06T23:01:34.310Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-10-06T16:48:15.843Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/2ddd0dd5-2b7a-43e3-84a1-44e5414901fc.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "d70b5366-6ec7-4d7c-8fc4-d0fed953a3a6",
+        "submissionId": "2ddd0dd5-2b7a-43e3-84a1-44e5414901fc",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-10-06T16:48:20.382Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "57631dcf-e9fd-4683-9886-d863d2e0d4db",
+        "updated": "2019-10-06T16:48:20.382Z",
+        "status": "completed"
+      }
+    ],
+    "id": "2ddd0dd5-2b7a-43e3-84a1-44e5414901fc",
+    "submissionPhaseId": null,
+    "updated": "2019-10-06T16:48:15.843Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+    "created": "2019-10-06T16:23:28.618Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/763b432f-9559-404f-ab06-ca6fec1d345b.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "b4e83b22-b232-4783-96ea-55d34096d31c",
+        "submissionId": "763b432f-9559-404f-ab06-ca6fec1d345b",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-10-06T16:23:32.791Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "78a5a192-d394-4ff5-92a7-5d108c6f3b41",
+        "updated": "2019-10-06T16:23:32.791Z",
+        "status": "completed"
+      }
+    ],
+    "id": "763b432f-9559-404f-ab06-ca6fec1d345b",
+    "submissionPhaseId": null,
+    "updated": "2019-10-06T16:23:28.618Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-10-06T15:45:23.943Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/fed279ab-42da-4b9e-9e0c-b1fb0a001497.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "fef0b1fb-d6a8-4231-857c-fa3bcab9dd89",
+        "submissionId": "fed279ab-42da-4b9e-9e0c-b1fb0a001497",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-10-06T15:45:27.285Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "6d34fe56-3667-48a3-8f77-9824f6b64448",
+        "updated": "2019-10-06T15:45:27.285Z",
+        "status": "completed"
+      }
+    ],
+    "id": "fed279ab-42da-4b9e-9e0c-b1fb0a001497",
+    "submissionPhaseId": null,
+    "updated": "2019-10-06T15:45:23.943Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-10-06T15:44:46.893Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/7a36b3dd-2b6c-4c2a-85ee-00f8da87cbae.zip",
+    "challengeId": 30095545,
+    "filename": "8547899.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "948d4913-588b-4f94-a7d5-c5caf7b80dfd",
+        "submissionId": "7a36b3dd-2b6c-4c2a-85ee-00f8da87cbae",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-10-06T15:44:51.889Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "84f88241-0aca-4b3b-9bc7-09ca7a657845",
+        "updated": "2019-10-06T15:44:51.889Z",
+        "status": "completed"
+      }
+    ],
+    "id": "7a36b3dd-2b6c-4c2a-85ee-00f8da87cbae",
+    "submissionPhaseId": null,
+    "updated": "2019-10-06T15:44:46.893Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-10-06T15:08:24.657Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/da0aec4f-894d-46e3-9846-c0e98555005b.zip",
+    "challengeId": 30095545,
+    "filename": "test_zip_file.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "b33db1b0-3fb4-4bed-805e-31657c3a6821",
+        "submissionId": "da0aec4f-894d-46e3-9846-c0e98555005b",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-10-06T15:08:28.096Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "5a93b21c-af19-460c-8f61-46f03d737652",
+        "updated": "2019-10-06T15:08:28.096Z",
+        "status": "completed"
+      }
+    ],
+    "id": "da0aec4f-894d-46e3-9846-c0e98555005b",
+    "submissionPhaseId": null,
+    "updated": "2019-10-06T15:08:24.657Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-10-06T15:07:11.287Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/3a12d16c-9cb1-4c7d-bc22-26a5827efe71.zip",
+    "challengeId": 30095545,
+    "filename": "test_zip_file.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "a3161429-542a-456d-9098-781ab5972a59",
+        "submissionId": "3a12d16c-9cb1-4c7d-bc22-26a5827efe71",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-10-06T15:07:14.125Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "2f1f3b26-d03f-41f9-ba67-fb9f4de18968",
+        "updated": "2019-10-06T15:07:14.125Z",
+        "status": "completed"
+      }
+    ],
+    "id": "3a12d16c-9cb1-4c7d-bc22-26a5827efe71",
+    "submissionPhaseId": null,
+    "updated": "2019-10-06T15:07:11.287Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "TonyJ",
+    "created": "2019-10-06T15:07:00.792Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/fd55c8ce-9617-4a7a-9296-b390bd54fa17.zip",
+    "challengeId": 30095545,
+    "filename": "test_zip_file.zip",
+    "createdBy": "TonyJ",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "433d29a1-dff5-4d0f-a2fa-51036c448e8a",
+        "submissionId": "fd55c8ce-9617-4a7a-9296-b390bd54fa17",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-10-06T15:07:05.252Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "8a3cda40-8206-4afb-bdaf-d6d492d0d0ed",
+        "updated": "2019-10-06T15:07:05.252Z",
+        "status": "completed"
+      }
+    ],
+    "id": "fd55c8ce-9617-4a7a-9296-b390bd54fa17",
+    "submissionPhaseId": null,
+    "updated": "2019-10-06T15:07:00.792Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  },
+  {
+    "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+    "created": "2019-09-29T06:46:10.128Z",
+    "isFileSubmission": true,
+    "type": "Contest Submission",
+    "url": "https://s3.amazonaws.com/topcoder-dev-submissions/5804c129-f8c2-4246-a6a3-c662916e3f02.zip",
+    "challengeId": 30095545,
+    "legacySubmissionId": 208870,
+    "filename": "8547899.zip",
+    "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+    "review": [
+      {
+        "score": 100,
+        "updatedBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "reviewerId": "67a62bcf-6c40-4452-ab20-534016568ec0",
+        "submissionId": "5804c129-f8c2-4246-a6a3-c662916e3f02",
+        "createdBy": "maE2maBSv9fRVHjSlC31LFZSq6VhhZqC@clients",
+        "created": "2019-09-29T06:46:30.229Z",
+        "scoreCardId": 30001850,
+        "typeId": "68c5a381-c8ab-48af-92a7-7a869a4ee6c3",
+        "id": "d677877a-abaf-4ec9-8aa7-466a09bd8f6d",
+        "updated": "2019-09-29T06:46:30.229Z",
+        "status": "completed"
+      }
+    ],
+    "id": "5804c129-f8c2-4246-a6a3-c662916e3f02",
+    "submissionPhaseId": null,
+    "updated": "2019-09-29T06:46:10.128Z",
+    "fileType": "zip",
+    "memberId": 8547899
+  }
+]

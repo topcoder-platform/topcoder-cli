@@ -8,7 +8,7 @@ module.exports = {
     process.env.TC_MEMBERS_API || 'https://api.topcoder.com/v3/members',
   SUBMISSION_API_URL:
     process.env.TEST_SUBMISSION_API_URL ||
-    'https://api.topcoder.com/v5/submissions',
+    'https://api.topcoder.com/v5',
   AUTH0_URL: process.env.AUTH0_URL || 'https://topcoder.auth0.com/oauth/token',
   TC_AUTHN_URL:
     process.env.TC_AUTHN_URL || 'https://topcoder.auth0.com/oauth/ro',

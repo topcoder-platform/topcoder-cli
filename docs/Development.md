@@ -19,6 +19,14 @@ The following parameters can be set in config files or in env variables:
 | TC_CLIENT_V2CONNECTION | CLIENT_V2CONNECTION     | TC-User-Database                           | TC client connection protocol          |
 | AUTH0_AUDIENCE         | AUTH0_AUDIENCE          | https://m2m.topcoder.com/                  | AUTH0 Audience (For M2M)               |
 
+# Configuration for Test
+Configuration for test is at `test/common/testConfig.js`.
+The following parameters can be set in config files or in env variables:
+
+| Property  | Environment varible | Default value | Description                                                                   |
+| ---       | ---                 | ---           | ---                                                                           |
+| WAIT_TIME | WAIT_TIME           | 500           | Waiting time for the CLI tool to process subcommands. Increase the value if needed |
+
 # Publish the package to npm
 - Create a npm account on https://www.npmjs.com/signup if you don't have one.
 - Use the account to sign in via cli: `npm login`

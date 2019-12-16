@@ -1,11 +1,12 @@
 const prompts = require('prompts')
+const logger = require('../common/logger')
 
 /**
  * Handles the "pay" command
  * @param {Array} args Arguments
  */
 function handleCommand (args) {
-  const options = args[args.length - 1].opts()
+  const options = args[0].opts()
   const challengeDetails = [
     {
       type: 'text',
@@ -41,7 +42,7 @@ function handleCommand (args) {
     const response = await prompts(challengeDetails)
     // respose + options.copilot (copilot payment money) contains total
     // information needed to send request to API.
-    console.log(response)
+    logger.info(response)
     // => response => { username, age, about }
   }
   promptQuestions()

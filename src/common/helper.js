@@ -5,8 +5,6 @@ const submissionApi = require('@topcoder-platform/topcoder-submission-api-wrappe
 const logger = require('./logger')
 const configService = require('../services/configService')
 
-let submissionApiClient = null
-
 const defaultAuthSchema = Joi.object({
   username: Joi.string(),
   password: Joi.string(),
@@ -87,9 +85,6 @@ async function readFromRCFile (filename, cliParams, schema, validCLIParams) {
 }
 
 function getAPIClient (userName, password, m2m) {
-  if (submissionApiClient) {
-    return submissionApiClient
-  }
   const config = require('../config')()
   let clientConfig
   if (userName && password) {
@@ -113,7 +108,7 @@ function getAPIClient (userName, password, m2m) {
     clientConfig.AUTH0_CLIENT_ID = m2m.client_id
     clientConfig.AUTH0_CLIENT_SECRET = m2m.client_secret
   }
-  submissionApiClient = submissionApi(clientConfig)
+  const submissionApiClient = submissionApi(clientConfig)
   return submissionApiClient
 }
 
