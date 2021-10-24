@@ -13,7 +13,7 @@
   "dependencies": {
     "@hapi/joi": "^16.1.8",
     "@topcoder-platform/topcoder-submission-api-wrapper": "^1.2.0",
-    "adm-zip": "^0.4.11",
+    "adm-zip": "^0.5.7",
     "commander": "^3.0.0",
     "content-disposition": "^0.5.3",
     "fast-glob": "^2.2.6",
