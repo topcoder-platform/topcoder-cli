@@ -172,7 +172,10 @@ async function fetchSubmissions (currDir, cliParams) {
   }
 
   // Make the directory in which files will be saved.
-  await fs.mkdirp(savePath)
+  await /* TODO: JSFIX could not patch the breaking change:
+  Creating a directory with fs-extra no longer returns the path 
+  Suggested fix: The returned promise no longer includes the path of the new directory */
+  fs.mkdirp(savePath)
 
   // Download the submissions.
   return downloadSubmissions(submissions, savePath)
